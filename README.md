@@ -15,7 +15,7 @@
 1. สมัคร Oracle Cloud Always Free — Home Region ap-singapore-1, โควตา A1 รวม 2 OCPU / 12 GB RAM, boot volume รวม 200 GB
 2. ตั้งค่า Network ให้มี Public IPv4 — Create VCN with Internet Connectivity, Public Subnet, Internet Gateway, Security List (22/80/443)
 3. สร้าง VM.Standard.A1.Flex Instance — Image ARM, Assign public IPv4, SSH key, ตรวจ Public IP และ Troubleshooting รวมถึงการตั้งค่า Boot Volume (VPU 10 Balanced เสมอ; 50 GB สำหรับเครื่องสอน/ทดสอบ; เครื่องเดียวเต็มโควตา 2 OCPU/12 GB ใช้ 200 GB ได้ 12,000 IOPS / 96 MB/s)
-4. Tips: อัปเกรด Pay As You Go เพิ่มโอกาสได้เครื่อง — ใช้เกินโควตา Always Free มีค่าใช้จ่ายจริง พร้อม Guardrail คุมงบ รวมถึงวิธีตั้ง Budget alert ที่งบ 0.10 SGD (กฎ Actual/Forecast 100%) ให้อีเมลเตือนเมื่อยอดเริ่มเกินศูนย์
+4. Tips: อัปเกรด Pay As You Go เพิ่มโอกาสได้เครื่อง — ใช้เกินโควตา Always Free มีค่าใช้จ่ายจริง พร้อม Guardrail คุมงบ รวมถึงวิธีตั้ง Budget alert (งบต้องเป็นจำนวนเต็ม: ตั้ง 1 SGD แล้วใช้กฎ Actual Spend เกณฑ์ 10% ของงบ = อีเมลเตือนเมื่อยอดแตะ 0.10 SGD; กฎ Forecast เพิ่มเป็นกฎที่สองหลังสร้างงบ)
 5. ภาคเสริม OCI CLI — ติดตั้ง, `oci setup config`, สร้าง/จัดการ Instance ผ่าน API ให้ AI Agent ทำงานแทนอย่างปลอดภัย
 6. ติดตั้ง Hermes Agent บน Oracle Linux 9 — ต่างจาก Ubuntu ตรงที่ใช้ `dnf` ไม่ใช่ `apt`: เตรียมแพ็กเกจพื้นฐานด้วย `sudo dnf install`, เปิด EPEL สำหรับ ripgrep, แล้วติดตั้งด้วยสคริปต์ทางการจาก GitHub (NousResearch/hermes-agent) และตั้งค่าด้วย `hermes setup` / `hermes doctor`
 

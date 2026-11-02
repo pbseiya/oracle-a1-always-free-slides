@@ -504,23 +504,23 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
   <span class="snum">15 / 27</span>
 </section>
 
-<!-- 16 BUDGET ALERT 0.10 SGD -->
+<!-- 16 BUDGET ALERT — เตือนที่ 0.10 SGD (งบ SGD 1 × เกณฑ์ 10%) -->
 <section class="slide" data-title="ตั้ง Budget Alert — เตือนเมื่อค่าใช้จ่ายเกิน 0.10 SGD">
   <span class="phase tip">Tips พิเศษ · เฝ้าค่าใช้จ่าย PAYG</span>
   <h2>ตั้ง <span class="hla">Budget Alert 0.10 SGD</span> — ให้ Oracle ส่งอีเมลเตือนเอง</h2>
-  <p class="lead">คำตอบของคำถาม “มีวิธีเตือนเมื่อยอดเกิน 0.1 SGD ไหม” คือ <strong>มี — ใช้ Budgets ในตัว OCI</strong> ตั้งงบไว้ที่ <strong>0.10 SGD</strong> แล้วผูกกฎแจ้งเตือนที่ <strong>100% ของงบ</strong> พอยอดที่โพสต์เข้าระบบเกิน 0.10 เมื่อไหร่ ระบบจะส่งอีเมลมาทันทีตามรอบข้อมูล ตั้งครั้งเดียว งบรีเซ็ตและเฝ้าให้ทุกเดือน</p>
+  <p class="lead">คำตอบของคำถาม “มีวิธีเตือนเมื่อยอดเกิน 0.1 SGD ไหม” คือ <strong>มี — ใช้ Budgets ในตัว OCI</strong> แต่ช่อง Budget Amount <strong>รับเฉพาะจำนวนเต็ม</strong> ใส่ 0.1 ตรง ๆ ไม่ได้ สูตรที่ใช้ได้จริงคือตั้งงบไว้ที่ <strong>SGD 1</strong> แล้วผูกกฎแจ้งเตือนแบบ <strong>Actual Spend ที่ 10% ของงบ</strong> — เท่ากับเตือนพอดีเมื่อยอดแตะ <strong>0.10 SGD</strong> พอยอดที่โพสต์เข้าระบบเกินจุดนั้น ระบบจะส่งอีเมลมาทันทีตามรอบข้อมูล ตั้งครั้งเดียว งบรีเซ็ตและเฝ้าให้ทุกเดือน</p>
   <span class="path">Billing &amp; Cost Management &gt; Budgets &gt; Create Budget</span>
   <ol class="steps">
     <li><span class="n">1</span><div><b>เปิดหน้า Create Budget</b><br><span>เมนู <b style="color:var(--ink)">Billing &amp; Cost Management → Budgets → Create Budget</b></span></div></li>
-    <li><span class="n">2</span><div><b>กรอกงบหลัก</b> — Name: <span class="mono" style="color:#7dd3fc">free-tier-guard</span> · Compartment: <b>root</b> (ครอบคลุมทั้ง tenancy) · Period: <b>Monthly</b> · <b>Amount = 0.10</b><br><span>หน่วยเป็น <b style="color:var(--ink)">SGD</b> ตามสกุลของบัญชีนี้อยู่แล้ว · Start date เลือกวันที่ 1 ของเดือน</span></div></li>
-    <li><span class="n">3</span><div><b>สร้าง Alert Rule แบบ Actual ที่ 100%</b><br><span>ในขั้น Alert Rules: ชนิด <b style="color:var(--ink)">Actual</b> (ยอดใช้จริง) · Threshold = <b style="color:var(--ink)">100% ของงบ</b> (= 0.10 SGD) · ช่อง Recipients ใส่อีเมลของตัวเอง</span></div></li>
-    <li><span class="n">4</span><div><b>เพิ่มกฎที่สองแบบ Forecast 100% (แนะนำ)</b><br><span>Oracle จะเตือนล่วงหน้าเมื่อคาดการณ์ว่ายอดสิ้นเดือนจะทะลุ 0.10 ทั้งที่ยอดจริงยังไม่ถึง จะได้รู้ตัวก่อน แล้วกด <b style="color:var(--ink)">Create</b> จบ</span></div></li>
+    <li><span class="n">2</span><div><b>กรอกงบหลัก</b> — Name: <span class="mono" style="color:#7dd3fc">free-tier-guard</span> · Compartment: <b>root</b> (ครอบคลุมทั้ง tenancy) · Period: <b>Monthly</b> · <b>Amount = 1</b><br><span>หน่วยเป็น <b style="color:var(--ink)">SGD</b> ตามสกุลของบัญชีนี้อยู่แล้ว · Start date เลือกวันที่ 1 ของเดือน<br>⚠️ ช่อง Amount ใส่ทศนิยมไม่ได้ — ถ้าใส่ 0.1 ฟอร์มจะฟ้อง <b style="color:var(--ink)">“Budget amount must be a positive whole number (decimals are not allowed)”</b> ต้องใช้จำนวนเต็มแล้วไปลดจุดเตือนที่ตัวกฎแทน (ขั้นถัดไป)</span></div></li>
+    <li><span class="n">3</span><div><b>กฎแรกต้องเป็น Actual Spend ที่ 10%</b><br><span>ในส่วน Budget Alert Rule: Threshold Metric เลือก <b style="color:var(--ink)">Actual Spend</b> (ยอดใช้จริง) · Threshold Type: <b style="color:var(--ink)">Percentage of Budget</b> · Threshold % = <b style="color:var(--ink)">10</b> (= 0.10 SGD) · ช่อง Email Recipients ใส่อีเมลของตัวเอง แล้วกด <b style="color:var(--ink)">Create</b><br>⚠️ อย่าเผลอเลือก <b style="color:var(--ink)">Forecast Spend</b> เป็นกฎแรก — Forecast คือยอด “คาดการณ์” ไม่ใช่ยอดที่เกิดจริง กฎหลักที่เฝ้าเงินจริงต้องเป็น Actual</span></div></li>
+    <li><span class="n">4</span><div><b>เพิ่มกฎ Forecast เป็นกฎที่สอง — หลัง Create แล้ว</b><br><span>สร้างงบเสร็จ เปิด Budget ที่เพิ่งสร้าง → เพิ่ม Alert Rule อีกกฎ: <b style="color:var(--ink)">Forecast Spend</b> ที่ <b style="color:var(--ink)">10%</b> เช่นกัน — Oracle จะเตือนล่วงหน้าเมื่อคาดการณ์ว่ายอดสิ้นเดือนจะทะลุ 0.10 ทั้งที่ยอดจริงยังไม่ถึง จะได้รู้ตัวก่อน</span></div></li>
   </ol>
   <div class="grid2">
     <div class="callout warn" style="margin:0"><h3>⏱️ ข้อจำกัดที่ 1 — แจ้งช้าตามข้อมูลราว 24 ชม.</h3><p>Usage ของ OCI มี lag ราว 24 ชม. (แบบเดียวกับหน้า Usage วันแรกที่ยังขึ้น SKUs used = 0) — อีเมลจึงมาหลังยอดเกิดจริงประมาณ 1 วัน ไม่ใช่เรียลไทม์ ต้องกลับมาเช็กยอดซ้ำในวันถัดไปด้วยตัวเองเสมอ</p></div>
     <div class="callout danger" style="margin:0"><h3>🛑 ข้อจำกัดที่ 2 — เตือนอย่างเดียว ไม่ได้กันยอด</h3><p>Budget <b>ไม่หยุดการคิดเงิน</b> ถ้ามีอะไรหลุดโควตา Always Free จริง ยอดอาจวิ่งเกิน 0.10 ไปแล้วก่อนเมลมาถึง — มันคือเส้นลวดสะดุด (tripwire) ให้รู้ตัวแล้วรีบเข้าไปเช็ก ไม่ใช่ตัวล็อกงบ</p></div>
   </div>
-  <div class="callout ok"><h3>✅ เช็กว่าตั้งถูกแล้ว</h3><p>หลัง Create ให้เห็น Budget ชื่อ <b>free-tier-guard</b> · Amount <b>SGD 0.10</b> · มี Alert Rule <b>Actual 100%</b> (และ Forecast 100% ถ้าเพิ่มไว้) ผูกกับอีเมลของตัวเอง — แปลว่าเฝ้ายอดให้แล้ว ส่วนเครื่องที่ตั้งไว้พอดีเพดาน Always Free (A1 2 OCPU / 12 GB · Boot Volume 200 GB · VPU 10) ยอดที่ถูกต้องต้องยังเป็น <b>0</b> ถ้าเมลเตือนเด้ง ให้เปิด Cost Analysis ไล่ดูทันทีว่าเป็น SKU ไหนหลุดโควตา</p></div>
+  <div class="callout ok"><h3>✅ เช็กว่าตั้งถูกแล้ว</h3><p>หลัง Create ให้เห็น Budget ชื่อ <b>free-tier-guard</b> · Amount <b>SGD 1</b> · มี Alert Rule <b>Actual Spend ที่ Threshold 10%</b> (= เตือนเมื่อยอดแตะ 0.10 SGD) และกฎ <b>Forecast Spend 10%</b> ที่เพิ่มตามหลัง ผูกกับอีเมลของตัวเอง — แปลว่าเฝ้ายอดให้แล้ว ส่วนเครื่องที่ตั้งไว้พอดีเพดาน Always Free (A1 2 OCPU / 12 GB · Boot Volume 200 GB · VPU 10) ยอดที่ถูกต้องต้องยังเป็น <b>0</b> ถ้าเมลเตือนเด้ง ให้เปิด Cost Analysis ไล่ดูทันทีว่าเป็น SKU ไหนหลุดโควตา</p></div>
   <span class="snum">16 / 27</span>
 </section>
 
