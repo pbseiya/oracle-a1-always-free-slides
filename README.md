@@ -9,7 +9,7 @@
 
 สไลด์เสริม — วิธีสร้าง VCN ด้วย VCN Wizard ทีละขั้นจากหน้าจอจริง (7 ขั้นตอน ภาพทั้งหมดปิดข้อมูลเฉพาะตัวแล้ว): https://pbseiya.github.io/oracle-a1-always-free-slides/vcn.html
 
-สไลด์เสริม — สร้าง A1 Instance จากหน้าจอจริง: เช็กเครดิตทดลอง SGD 400, สร้างเครื่องทีละขั้น, เจอ Out of Capacity, เก็บงานเป็น Stack แล้ว Apply, อัปเกรด Pay As You Go และรอเมลยืนยันก่อน Apply รอบใหม่ (23 ขั้นตอน ภาพทั้งหมดปิดข้อมูลเฉพาะตัวแล้ว): https://pbseiya.github.io/oracle-a1-always-free-slides/instance.html
+สไลด์เสริม — สร้าง A1 Instance จากหน้าจอจริง: เช็กเครดิตทดลอง SGD 400, สร้างเครื่องทีละขั้น, เจอ Out of Capacity, เก็บงานเป็น Stack แล้ว Apply, อัปเกรด Pay As You Go และรอเมลยืนยันก่อน Apply รอบใหม่ (26 ขั้นตอน รวมตอนจบ: Apply รอบสองสำเร็จได้เครื่องจริง, PAYG มีผลแล้ว และเช็ก Usage วันแรก SGD 0.00 — ภาพทั้งหมดปิดข้อมูลเฉพาะตัวแล้ว): https://pbseiya.github.io/oracle-a1-always-free-slides/instance.html
 
 ## เนื้อหา (26 สไลด์)
 1. สมัคร Oracle Cloud Always Free — Home Region ap-singapore-1, โควตา A1 รวม 2 OCPU / 12 GB RAM, boot volume รวม 200 GB
