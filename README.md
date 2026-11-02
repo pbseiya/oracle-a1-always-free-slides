@@ -9,10 +9,10 @@
 
 สไลด์เสริม — วิธีสร้าง VCN ด้วย VCN Wizard ทีละขั้นจากหน้าจอจริง (7 ขั้นตอน ภาพทั้งหมดปิดข้อมูลเฉพาะตัวแล้ว): https://pbseiya.github.io/oracle-a1-always-free-slides/vcn.html
 
-## เนื้อหา (24 สไลด์)
+## เนื้อหา (26 สไลด์)
 1. สมัคร Oracle Cloud Always Free — Home Region ap-singapore-1, โควตา A1 รวม 2 OCPU / 12 GB RAM, boot volume รวม 200 GB
 2. ตั้งค่า Network ให้มี Public IPv4 — Create VCN with Internet Connectivity, Public Subnet, Internet Gateway, Security List (22/80/443)
-3. สร้าง VM.Standard.A1.Flex Instance — Image ARM, Assign public IPv4, SSH key, ตรวจ Public IP และ Troubleshooting
+3. สร้าง VM.Standard.A1.Flex Instance — Image ARM, Assign public IPv4, SSH key, ตรวจ Public IP และ Troubleshooting รวมถึงการตั้งค่า Boot Volume (VPU 10 Balanced เสมอ; 50 GB สำหรับเครื่องสอน/ทดสอบ; เครื่องเดียวเต็มโควตา 2 OCPU/12 GB ใช้ 200 GB ได้ 12,000 IOPS / 96 MB/s)
 4. Tips: อัปเกรด Pay As You Go เพิ่มโอกาสได้เครื่อง — ใช้เกินโควตา Always Free มีค่าใช้จ่ายจริง พร้อม Guardrail คุมงบ
 5. ภาคเสริม OCI CLI — ติดตั้ง, `oci setup config`, สร้าง/จัดการ Instance ผ่าน API ให้ AI Agent ทำงานแทนอย่างปลอดภัย
 6. ติดตั้ง Hermes Agent บน Oracle Linux 9 — ต่างจาก Ubuntu ตรงที่ใช้ `dnf` ไม่ใช่ `apt`: เตรียมแพ็กเกจพื้นฐานด้วย `sudo dnf install`, เปิด EPEL สำหรับ ripgrep, แล้วติดตั้งด้วยสคริปต์ทางการจาก GitHub (NousResearch/hermes-agent) และตั้งค่าด้วย `hermes setup` / `hermes doctor`

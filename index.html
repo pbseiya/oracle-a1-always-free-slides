@@ -223,7 +223,7 @@ td code{color:#7dd3fc;font-size:.9em}
     </div>
     <div class="cover-badges"><span>ARM Ampere</span><span>Always Free-eligible</span><span>IPv4 พร้อมใช้</span></div>
   </div>
-  <span class="snum">01 / 24</span>
+  <span class="snum">01 / 26</span>
 </section>
 
 <!-- 2 ROADMAP -->
@@ -237,8 +237,8 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="card"><span class="num-badge g">3</span><h3>สร้าง A1 Instance</h3><p>เลือก Image ARM + Shape A1.Flex ในโควตา · ผูก Public Subnet เดิม · ติ๊ก Assign Public IPv4</p><p style="margin-top:8px"><span class="pill gr">ผลลัพธ์: เครื่อง Running + มี Public IP</span></p></div>
   </div>
   <div class="callout info"><h3>🎯 เป้าหมายตอนจบคลาส</h3><p>ทุกคนมี Instance สถานะ <b>Running</b> เห็น <b>Public IP</b> ในหน้า Instance Details และ SSH เข้าเครื่องตัวเองได้สำเร็จ</p></div>
-  <p class="foot-note">+ <b style="color:var(--amber)">ภาคเสริมท้าย Deck (สไลด์ 15–18):</b> สั่งงานแบบเดียวกันนี้ผ่าน OCI CLI / API เพื่อให้ AI Agent ทำงานแทนได้ · <b style="color:var(--green)">ช่วงที่ 5 (สไลด์ 19–23):</b> ติดตั้ง Hermes Agent บน Oracle Linux 9 — ขั้นสุดท้ายของวันนี้</p>
-  <span class="snum">02 / 24</span>
+  <p class="foot-note">+ <b style="color:var(--amber)">ภาคเสริมท้าย Deck (สไลด์ 17–20):</b> สั่งงานแบบเดียวกันนี้ผ่าน OCI CLI / API เพื่อให้ AI Agent ทำงานแทนได้ · <b style="color:var(--green)">ช่วงที่ 5 (สไลด์ 21–25):</b> ติดตั้ง Hermes Agent บน Oracle Linux 9 — ขั้นสุดท้ายของวันนี้</p>
+  <span class="snum">02 / 26</span>
 </section>
 
 <!-- 3 PHASE 1 STEPS -->
@@ -252,7 +252,8 @@ td code{color:#7dd3fc;font-size:.9em}
     <li><span class="n">3</span><div><b>เลือก Home Region = Singapore</b><br><span>ค่าในสไลด์ถัดไป — ขั้นนี้สำคัญที่สุดของการสมัคร เพราะเปลี่ยนทีหลังไม่ได้</span></div></li>
     <li><span class="n">4</span><div><b>ยังไม่ต้องอัปเกรดเป็น Pay-As-You-Go</b><br><span>อยู่ Free Tier เดิมก็สร้าง A1 แบบ Always Free ได้เลย (ทางเลือก PAYG อยู่สไลด์ Tips พิเศษท้ายคลาส)</span></div></li>
   </ol>
-  <span class="snum">03 / 24</span>
+  <div class="callout info"><h3>📸 อยากเห็นหน้าจอจริงทีละขั้น?</h3><p>มีสไลด์แยกที่แคปหน้าจอสมัครจริงไว้ครบทุกขั้น กดเปิดดูประกอบตอนสมัครได้เลย</p><p style="margin-top:12px"><a href="https://pbseiya.github.io/oracle-a1-always-free-slides/signup.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#06202e;font-family:'Segoe UI',sans-serif;font-weight:800;text-decoration:none;padding:11px 20px;border-radius:999px;font-size:1rem">วิธีสมัครทีละขั้นจากหน้าจอจริง →</a></p></div>
+  <span class="snum">03 / 26</span>
 </section>
 
 <!-- 4 REGION + QUOTA -->
@@ -271,7 +272,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="card"><h3>แบ่งเครื่องแบบที่ 2 — แยกสองเครื่อง</h3><p>เครื่องละ <b style="color:var(--ink)">1 OCPU / 6 GB RAM</b> แยกงานออกจากกัน แต่รวมกันห้ามเกินโควตาด้านบน</p></div>
   </div>
   <p class="foot-note">ตัวเลขโควตาเป็นแบบ “รวมกันทั้งบัญชี” ไม่ใช่ต่อเครื่อง — สร้างเครื่องที่สองโดยลืมเครื่องแรก คือสาเหตุยอดฮิตที่กดสร้างแล้วเกินโควตา</p>
-  <span class="snum">04 / 24</span>
+  <span class="snum">04 / 26</span>
 </section>
 
 <!-- 5 PHASE 2 PRINCIPLE -->
@@ -290,7 +291,7 @@ td code{color:#7dd3fc;font-size:.9em}
     </div>
   </div>
   <div class="callout warn"><h3>⚠️ ลำดับสำคัญ</h3><p>สร้าง VCN + Public Subnet ให้เสร็จ <b>ก่อน</b> เปิดหน้าสร้าง Instance เสมอ — เหตุผลอยู่ในสไลด์ “จุดที่เคยติด” ช่วงท้ายของช่วงนี้</p></div>
-  <span class="snum">05 / 24</span>
+  <span class="snum">05 / 26</span>
 </section>
 
 <!-- 6 CREATE VCN -->
@@ -307,7 +308,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <tr><td><b>Private Subnet CIDR</b></td><td><code>10.0.1.0/24</code></td></tr>
   </table>
   <p class="foot-note">กด Next → Create ตาม Wizard จนเสร็จ แล้วค่อยไปเช็ก Security List ต่อในสไลด์ถัดไป</p>
-  <span class="snum">06 / 24</span>
+  <span class="snum">06 / 26</span>
 </section>
 
 <!-- 7 WIZARD OUTPUT + SECURITY LIST -->
@@ -333,7 +334,7 @@ td code{color:#7dd3fc;font-size:.9em}
     </div>
   </div>
   <p class="foot-note">พอร์ต 22 คือประตูเดียวที่ต้องใช้ในคลาสนี้วันนี้ — 80 / 443 เพิ่มเฉพาะคนที่จะเปิดเว็บจากเครื่องนี้</p>
-  <span class="snum">07 / 24</span>
+  <span class="snum">07 / 26</span>
 </section>
 
 <!-- 8 GOTCHA -->
@@ -345,7 +346,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="callout ok" style="margin:0"><h3>✅ วิธีแก้ที่ถูกต้อง</h3><p>ย้อนไปสร้าง <b>VCN ด้วย Wizard ให้เสร็จก่อน</b> (สไลด์ 06–07) แล้วตอนสร้าง Instance ให้เลือก <b>Public Subnet ที่มีอยู่แล้ว</b> — ช่อง Assign Public IPv4 จะปลดล็อกทันที</p></div>
   </div>
   <div class="callout info"><h3>🧭 จำสั้น ๆ</h3><p><b>Subnet สร้างในหน้า Instance = IPv4 ล็อก · Subnet สร้างจาก Wizard มาก่อน = IPv4 ติ๊กได้</b> — นี่คือเหตุผลที่คอร์สนี้บังคับทำช่วงที่ 2 ก่อนช่วงที่ 3</p></div>
-  <span class="snum">08 / 24</span>
+  <span class="snum">08 / 26</span>
 </section>
 
 <!-- 9 PHASE 3 IMAGE + SHAPE -->
@@ -358,7 +359,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="card"><span class="num-badge g">B</span><h3>Shape — VM.Standard.A1.Flex</h3><p>ต้องเห็นป้าย <span class="pill gr">Always Free-eligible</span> แล้วตั้งขนาดให้อยู่ในโควตา</p><ul><li>เครื่องเดียวจบ: <b style="color:var(--ink)">2 OCPU / 12 GB</b></li><li>แยกสองเครื่อง: เครื่องละ <b style="color:var(--ink)">1 OCPU / 6 GB</b></li></ul></div>
   </div>
   <div class="callout warn"><h3>⚠️ เช็กก่อนเลื่อนลง</h3><p>ชื่อ Shape ต้องเป็น <b>VM.Standard.A1.Flex</b> เป๊ะ ๆ และยังมีป้าย Always Free-eligible — ถ้าไม่ตรง ให้ย้อนกลับไปแก้ อย่ากด Create ต่อ</p></div>
-  <span class="snum">09 / 24</span>
+  <span class="snum">09 / 26</span>
 </section>
 
 <!-- 10 NETWORKING + SSH KEY -->
@@ -371,11 +372,61 @@ td code{color:#7dd3fc;font-size:.9em}
     <li><span class="n">3</span><div><b>Assign a public IPv4 address</b> — ติ๊กเปิด ✅<br><span>ช่องนี้ต้องติ๊กได้ ถ้าล็อกอยู่ แปลว่าเลือก Subnet ผิด ให้กลับไปข้อ 2</span></div></li>
     <li><span class="n">4</span><div><b>SSH Key</b> — เลือก <b>Generate a key pair for me</b><br><span>กดดาวน์โหลด <b>Private Key</b> เก็บไว้ให้ดี — ไฟล์นี้คือกุญแจเข้าเครื่อง โหลดซ้ำทีหลังไม่ได้ และห้ามแจกใคร</span></div></li>
   </ol>
-  <div class="callout ok"><h3>✅ ครบแล้ว กด Create ได้</h3><p>รอสถานะเปลี่ยนเป็น <b>Running</b> แล้วเปิดหน้า Instance Details — ค่า <b>Public IP address</b> ที่เห็น คือ IPv4 ของเครื่องเรา</p></div>
-  <span class="snum">10 / 24</span>
+  <div class="callout ok"><h3>✅ ครบส่วน Networking + SSH Key</h3><p>เหลืออีกหนึ่งช่วงในหน้าเดียวกัน: ขั้น <b>Storage</b> — ตั้ง Boot Volume ตาม 2 สไลด์ถัดไป แล้วค่อยกด <b>Create</b> รอสถานะเปลี่ยนเป็น <b>Running</b> จากนั้นเปิดหน้า Instance Details — ค่า <b>Public IP address</b> ที่เห็น คือ IPv4 ของเครื่องเรา</p></div>
+  <span class="snum">10 / 26</span>
 </section>
 
-<!-- 11 VERIFY SSH -->
+<!-- 11 BOOT VOLUME BASICS -->
+<section class="slide" data-title="ช่วงที่ 3 — Boot Volume: Size กับ VPU ตั้งเท่าไรดี">
+  <span class="phase p3">ช่วงที่ 3 · สร้าง Instance</span>
+  <h2>ขั้น Storage: <span class="hlg">Boot Volume</span> ตั้งสองค่านี้ยังไง</h2>
+  <p class="lead">ใน Wizard ขั้นที่ 4 (Storage) จะมีให้กำหนด <strong>Boot volume size</strong> กับ <strong>Boot volume performance (VPU)</strong> — กฎจำง่ายคือ <strong>VPU คงที่เสมอ ส่วน Size ขึ้นกับแผนว่าจะมีกี่เครื่อง</strong></p>
+  <div class="grid2">
+    <div class="card"><span class="num-badge g">VPU</span><h3>VPU = 10 เสมอ ห้ามเพิ่ม</h3>
+      <ul>
+        <li style="color:var(--muted)">VPU 10 คือระดับ <b style="color:var(--ink)">Balanced</b> — ค่าเริ่มต้นและเป็นระดับที่รวมอยู่ใน Always Free <b style="color:var(--ink)">ไม่คิดเงินเพิ่ม</b></li>
+        <li style="color:var(--muted)">ปรับเป็น <b style="color:var(--ink)">20 ขึ้นไป</b> จะกลายเป็นระดับ <b style="color:var(--ink)">Higher Performance ซึ่งคิดเงินตามหน่วย VPU</b> — ช่วงทดลองจะไปกินเครดิตทดลอง และถ้าอัปเกรด PAYG จะโดนเก็บเงินจริง</li>
+        <li style="color:var(--muted)">งานของเราต้องการแค่ OS + ติดตั้ง Hermes ระดับ Balanced เหลือเฟือ และ <b style="color:var(--ink)">VPU ปรับขึ้น/ลงทีหลังได้ตลอดโดยไม่ต้องลบเครื่อง</b> จึงไม่มีเหตุผลให้เผื่อไว้ก่อน</li>
+      </ul>
+    </div>
+    <div class="card"><span class="num-badge g">SIZE</span><h3>Size: เครื่องสอน/ทดสอบใช้ 50 GB</h3>
+      <ul>
+        <li style="color:var(--muted)">ตัว Oracle Linux ใช้จริงไม่ถึง 10 GB บวก Hermes กับเครื่องมือต่าง ๆ ก็ยังเหลือพื้นที่ว่างเพียบ</li>
+        <li style="color:var(--muted)">โควตา <b style="color:var(--ink)">200 GB เป็นยอดรวมทั้งบัญชี</b> นับ Boot Volume ของทุกเครื่องรวมกัน ไม่ใช่เครื่องละ 200 — สูตรจำ: <b style="color:var(--ink)">จำนวนเครื่อง × ขนาดต่อเครื่อง ต้องไม่เกิน 200</b></li>
+        <li style="color:var(--ink)">Boot Volume <b>ขยายทีหลังได้ แต่ลดขนาดไม่ได้</b> — เริ่มเล็กไว้ก่อนจึงปลอดภัยกว่า</li>
+      </ul>
+    </div>
+  </div>
+  <div class="callout info"><h3>📌 ตัวอย่างค่าจากหน้าจอจริง</h3><p>ตั้ง <b>Size 50 GB / VPU 10</b> ระบบจะแสดงประสิทธิภาพ <b>3,000 IOPS · Throughput 24 MB/s · Target: Balanced</b> — ค่านี้ใช้สอนและทดสอบได้สบาย ไม่ต้องแก้</p></div>
+  <span class="snum">11 / 26</span>
+</section>
+
+<!-- 12 BOOT VOLUME SINGLE MACHINE -->
+<section class="slide" data-title="ช่วงที่ 3 — เครื่องเดียวเต็มโควตา 2 OCPU / 12 GB: Boot Volume 200 GB / VPU 10">
+  <span class="phase p3">ช่วงที่ 3 · สร้าง Instance</span>
+  <h2>ถ้ามีเครื่องเดียวเต็มโควตา <span class="hlg">2 OCPU / 12 GB</span>: ใช้ <span class="hlg">200 GB / VPU 10</span></h2>
+  <p class="lead">ในเมื่อตั้งใจมีเครื่องหลักเครื่องเดียว โควตา CPU/RAM ก็ถูกเครื่องนี้ใช้ครบอยู่แล้ว — <strong>Boot Volume ก็ใช้โควตาฟรีให้เต็มเพดานไปเลย</strong> ไม่ต้องกั๊กไว้</p>
+  <div class="quota">
+    <div class="q"><div class="big">200 GB</div><div class="lbl">Boot Volume Size — เต็มโควตาฟรีทั้งบัญชี</div></div>
+    <div class="q"><div class="big">VPU 10</div><div class="lbl">Balanced — ฟรี ไม่ว่าขนาดเท่าไร</div></div>
+    <div class="q"><div class="big">12,000 IOPS</div><div class="lbl">Throughput 96 MB/s ที่ขนาด 200 GB</div></div>
+  </div>
+  <h3 class="disp" style="font-size:1.12rem;margin-bottom:6px">ทำไมขนาดใหญ่แล้วเร็วขึ้น ทั้งที่ VPU เท่าเดิม?</h3>
+  <p class="lead" style="margin-bottom:10px">ประสิทธิภาพของระดับ Balanced <strong>โตตามขนาด Volume</strong> (60 IOPS/GB และ 480 KB/s/GB) — ขนาดยิ่งใหญ่ ยิ่งได้ IOPS กับ Throughput มากขึ้นโดยไม่ต้องแตะ VPU เลย</p>
+  <table>
+    <tr><th>Boot Volume Size</th><th>IOPS (ที่ VPU 10)</th><th>Throughput</th><th>เหมาะกับ</th></tr>
+    <tr><td><b>50 GB</b></td><td>3,000 IOPS</td><td>24 MB/s</td><td>เครื่องสอน / เครื่องทดสอบ แบ่งหลายเครื่อง</td></tr>
+    <tr><td><b>100 GB</b></td><td>6,000 IOPS</td><td>48 MB/s</td><td>เครื่องหลัก + เผื่อโควตาไว้อีก 100 GB</td></tr>
+    <tr><td><b>200 GB</b></td><td><b>12,000 IOPS</b></td><td><b>96 MB/s</b></td><td><b>เครื่องเดียวเต็มโควตา — แนะนำสำหรับเคสนี้</b></td></tr>
+  </table>
+  <div class="grid2">
+    <div class="callout ok" style="margin:0"><h3>✅ ทำไมตั้ง 200 GB ตั้งแต่ตอนสร้าง</h3><p>การขยายภายหลังต้องไป <b>ขยาย Partition ใน OS ต่อเอง</b>อีกขั้น — ตั้งขนาดเต็มตั้งแต่สร้างเครื่องเลยจบกว่า ส่วนข้อเสีย “ลดขนาดไม่ได้” ไม่กระทบเคสเครื่องหลักเครื่องเดียว เพราะไม่มีเหตุให้ลดอยู่แล้ว</p></div>
+    <div class="callout warn" style="margin:0"><h3>🔀 ทางเลือก: 150 GB</h3><p>ถ้าอยากเหลือพื้นที่ไว้ <b>50 GB</b> เผื่อสร้างเครื่องทดสอบเล็ก ๆ อีกเครื่อง หรือต่อ Block Volume เพิ่มภายหลัง เลือก 150 GB แทนได้ (ได้ 9,000 IOPS / 72 MB/s) — นอกนั้นถ้าแน่ใจว่าเครื่องเดียวจบ กด <b>200 GB / VPU 10</b> ได้เลย</p></div>
+  </div>
+  <span class="snum">12 / 26</span>
+</section>
+
+<!-- 13 VERIFY SSH -->
 <section class="slide" data-title="เช็กว่า IPv4 ใช้ได้จริง — ทดสอบ SSH">
   <span class="phase p3">ช่วงที่ 3 · สร้าง Instance</span>
   <h2>พิสูจน์ว่าใช้ได้จริง: <span class="hlg">SSH เข้าเครื่อง</span></h2>
@@ -388,8 +439,8 @@ td code{color:#7dd3fc;font-size:.9em}
   </div>
   <div class="codeblock"><span class="cm"># เข้าได้สำเร็จจะเห็น prompt ของเครื่อง เช่น</span>
 ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4 + SSH ผ่านครบ 🎉</span></div>
-  <div class="callout info"><h3>📌 รู้จัก IP แบบที่ได้วันนี้: Ephemeral</h3><p>Public IP แบบนี้ผูกกับ VNIC ของเครื่องไปจนกว่าจะ <b>Terminate</b> เครื่อง ถ้าต้องการ IP คงที่ไว้ย้ายเครื่องทีหลัง ค่อยไปจอง <b>Reserved Public IP</b> แล้ว Assign ให้ VNIC (สไลด์ 14)</p></div>
-  <span class="snum">11 / 24</span>
+  <div class="callout info"><h3>📌 รู้จัก IP แบบที่ได้วันนี้: Ephemeral</h3><p>Public IP แบบนี้ผูกกับ VNIC ของเครื่องไปจนกว่าจะ <b>Terminate</b> เครื่อง ถ้าต้องการ IP คงที่ไว้ย้ายเครื่องทีหลัง ค่อยไปจอง <b>Reserved Public IP</b> แล้ว Assign ให้ VNIC (สไลด์ 16)</p></div>
+  <span class="snum">13 / 26</span>
 </section>
 
 <!-- 12 TROUBLESHOOT -->
@@ -404,7 +455,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
     <li><span class="n">4</span><div><b>Firewall ใน OS เปิดพอร์ตนั้นหรือเปล่า?</b><br><span>กฎใน Cloud ผ่านแล้ว แต่ Firewall ภายในตัว OS ยังบล็อกได้ — เช็กเป็นจุดสุดท้าย</span></div></li>
   </ol>
   <p class="foot-note">เช็กเพิ่มตอน SSH: ใช้ Private Key ไฟล์ที่โหลดตอนสร้างเครื่อง · ชื่อผู้ใช้ตรงกับ OS (opc = Oracle Linux, ubuntu = Ubuntu) · พิมพ์ Public IP ไม่ผิด</p>
-  <span class="snum">12 / 24</span>
+  <span class="snum">14 / 26</span>
 </section>
 
 <!-- 13 PAYG TIPS -->
@@ -439,7 +490,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       <li>ช่วงแรกหลังอัปเกรด <b>เช็กบิลบ่อย ๆ</b> จนมั่นใจว่าไม่มีรายการคิดเงินโผล่มา</li>
     </ul>
   </div>
-  <span class="snum">13 / 24</span>
+  <span class="snum">15 / 26</span>
 </section>
 
 <!-- 14 CAPACITY + RESERVED -->
@@ -452,7 +503,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       <ul class="checks">
         <li><b>เปลี่ยน Availability Domain</b> แล้วกดสร้างใหม่</li>
         <li><b>ลองใหม่ช่วงคนน้อย</b> — เช้ามืด / นอกช่วงพีค โอกาสว่างสูงกว่า</li>
-        <li>ถ้ายังไม่ได้และยอมรับเงื่อนไขได้ ดูทางเลือก <b>PAYG ในสไลด์ 13</b> ประกอบการตัดสินใจ</li>
+        <li>ถ้ายังไม่ได้และยอมรับเงื่อนไขได้ ดูทางเลือก <b>PAYG ในสไลด์ 15</b> ประกอบการตัดสินใจ</li>
       </ul>
     </div>
     <div class="card"><h3>📌 อยากได้ IP คงที่? ใช้ Reserved Public IP</h3>
@@ -462,7 +513,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       </ul>
     </div>
   </div>
-  <span class="snum">14 / 24</span>
+  <span class="snum">16 / 26</span>
 </section>
 
 <!-- 15 PART 4 - WHY CLI -->
@@ -479,7 +530,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       <div class="codeblock">oci --version</div>
       <p>ถ้าแสดงเลขเวอร์ชันกลับมา แปลว่า CLI พร้อมใช้งาน ขั้นต่อไปคือผูก CLI เข้ากับบัญชี Oracle ของเรา</p></div>
   </div>
-  <span class="snum">15 / 24</span>
+  <span class="snum">17 / 26</span>
 </section>
 
 <!-- 16 PART 4 - SETUP CONFIG -->
@@ -500,7 +551,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       <li>รัน CLI + Agent บน <b>เครื่องที่ไว้ใจได้เท่านั้น</b></li>
     </ul>
   </div>
-  <span class="snum">16 / 24</span>
+  <span class="snum">18 / 26</span>
 </section>
 
 <!-- 17 PART 4 - LAUNCH WORKFLOW -->
@@ -529,7 +580,7 @@ oci network subnet list</div>
   --metadata '{"ssh_authorized_keys": "&lt;SSH_PUBLIC_KEY&gt;"}' \
   --display-name hermes-a1</div>
   <div class="callout info"><h3>🔁 เทียบกับช่วงที่ 3 — คือขั้นตอนเดียวกัน แค่เปลี่ยนจาก “คลิก” เป็น “คำสั่ง”</h3><p><b>--shape / --shape-config</b> = เลือก Shape + ขนาด · <b>--image-id</b> = เลือก Image ARM · <b>--subnet-id + --assign-public-ip true</b> = เลือก Public Subnet + ติ๊ก Assign Public IPv4 · <b>ssh_authorized_keys</b> = SSH Key ที่ฝังตอนสร้างเครื่อง</p></div>
-  <span class="snum">17 / 24</span>
+  <span class="snum">19 / 26</span>
 </section>
 
 <!-- 18 PART 4 - MANAGE + AGENT SAFETY -->
@@ -555,14 +606,14 @@ oci compute instance action --instance-id &lt;INSTANCE_OCID&gt; --action START</
       <div class="card"><h3>✅ กติกาก่อน Agent กดสร้างทุกครั้ง</h3>
         <ul class="checks">
           <li><b>เช็กโควตา Always Free ก่อนสร้าง</b> — รวมไม่เกิน 2 OCPU / 12 GB RAM · Volume ไม่เกิน 200 GB</li>
-          <li>บัญชี <b>PAYG ยิ่งต้องเช็ก</b>: เกินโควตา = มีค่าใช้จ่ายจริง (ย้อนดูสไลด์ 13)</li>
+          <li>บัญชี <b>PAYG ยิ่งต้องเช็ก</b>: เกินโควตา = มีค่าใช้จ่ายจริง (ย้อนดูสไลด์ 15)</li>
           <li>Agent ต้อง <b>รายงานคำสั่งที่จะรัน</b> ให้ผู้ใช้เห็นก่อน/ขณะทำ</li>
           <li>ทำเสร็จให้ <b>รายงานผลกลับ</b>: Public IP + สถานะ Running ให้ผู้ใช้ตรวจเองได้</li>
         </ul>
       </div>
     </div>
   </div>
-  <span class="snum">18 / 24</span>
+  <span class="snum">20 / 26</span>
 </section>
 
 <!-- 19 PART 5 - HERMES OL9 INTRO + COMPARE -->
@@ -579,7 +630,7 @@ oci compute instance action --instance-id &lt;INSTANCE_OCID&gt; --action START</
     <tr><td><b>Firewall / ความปลอดภัยใน OS</b></td><td><b>SELinux enforcing + firewall ในตัว OS เข้มกว่า</b> — เปิดพอร์ตเพิ่มต้องเปิดทั้ง Security List บน Cloud และ firewall ในเครื่อง</td><td>เปิด Security List มักพอสำหรับงานทั่วไป</td></tr>
   </table>
   <div class="callout info"><h3>📌 แผนของช่วงนี้ (4 ขั้น)</h3><p><b>ก)</b> SSH เข้าเครื่องในนาม <b>opc</b> เช็กเวอร์ชัน OL9 → <b>ข)</b> ลงแพ็กเกจพื้นฐานด้วย <b>dnf</b> → <b>ค)</b> รันตัวติดตั้ง Hermes ทางการ → <b>ง)</b> ตั้งค่า + เช็กความพร้อมด้วย <b>hermes doctor</b></p></div>
-  <span class="snum">19 / 24</span>
+  <span class="snum">21 / 26</span>
 </section>
 
 <!-- 20 PART 5 - SSH + DNF BASE -->
@@ -601,7 +652,7 @@ cat /etc/oracle-release
     <tr><td><code>libatomic</code></td><td>จำเป็นสำหรับ <b>Node.js</b> ที่ตัวติดตั้ง Hermes จัดมาให้</td></tr>
   </table>
   <div class="callout danger"><h3>🚨 กฎเหล็กของช่วงนี้</h3><p>คำสั่ง <b>dnf ด้านบนใช้ sudo ได้</b> — แต่ <b>ตัวติดตั้ง Hermes ในขั้นต่อไปห้ามรันด้วย sudo ทั้งสคริปต์เด็ดขาด</b> ให้รันในนามผู้ใช้ <b>opc</b> ธรรมดา ไม่งั้นไฟล์และ config ทั้งหมดจะกลายเป็นของ root แล้วใช้งานต่อไม่ได้</p></div>
-  <span class="snum">20 / 24</span>
+  <span class="snum">22 / 26</span>
 </section>
 
 <!-- 21 PART 5 - EPEL RIPGREP FFMPEG -->
@@ -622,14 +673,14 @@ sudo dnf install -y ripgrep</div>
       </ul></div>
   </div>
   <div class="callout ok"><h3>✅ เช็กก่อนไปต่อ</h3><p>รัน <span class="mono" style="color:#7dd3fc">git --version</span> และ <span class="mono" style="color:#7dd3fc">rg --version</span> ต้องได้เลขเวอร์ชันกลับมาทั้งคู่ — แปลว่าเครื่องพร้อมให้ตัวติดตั้ง Hermes ทำงานแล้ว</p></div>
-  <span class="snum">21 / 24</span>
+  <span class="snum">23 / 26</span>
 </section>
 
 <!-- 22 PART 5 - OFFICIAL INSTALLER -->
 <section class="slide" data-title="ช่วงที่ 5 — รันตัวติดตั้ง Hermes ทางการ (ห้ามใช้ sudo)">
   <span class="phase p3">ช่วงที่ 5 · ติดตั้ง Hermes บน OL9</span>
   <h2>ขั้น ค: รันตัวติดตั้งทางการ — <span class="hlg">คำสั่งเดียวจบ</span></h2>
-  <div class="codeblock"><span class="cm"># รันในนามผู้ใช้ opc — ห้าม sudo (เหตุผลอยู่สไลด์ 20)</span>
+  <div class="codeblock"><span class="cm"># รันในนามผู้ใช้ opc — ห้าม sudo (เหตุผลอยู่สไลด์ 22)</span>
 curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash -s -- --skip-browser
 
 <span class="cm"># โหลด shell ใหม่ให้เจอคำสั่ง hermes</span>
@@ -648,7 +699,7 @@ source ~/.bashrc</div>
       <p style="margin-top:8px">ทีหลังถ้าอยากใช้ฟีเจอร์ browser ค่อยติดตั้งเพิ่มเฉพาะส่วนนั้นได้ ไม่ต้องลง Hermes ใหม่</p></div>
   </div>
   <p class="foot-note">ที่มา: วิธีติดตั้งทางการจาก README ของ github.com/NousResearch/hermes-agent และสคริปต์ install.sh ทางการ (ตรวจเมื่อ 2 พ.ย. 2026)</p>
-  <span class="snum">22 / 24</span>
+  <span class="snum">24 / 26</span>
 </section>
 
 <!-- 23 PART 5 - SETUP + FIRST RUN -->
@@ -674,7 +725,7 @@ hermes gateway start</div>
     <div class="callout warn" style="margin:0"><h3>🔑 เรื่อง Token</h3><p>ตอน <b>hermes setup</b> ให้วาง Token ที่ได้รับสำหรับทดลองใช้งานลงในเครื่องของตัวเอง <b>ในขั้นตอนนั้นเท่านั้น</b> — ในสไลด์นี้ใช้ placeholder <span class="mono">&lt;HERMES_TOKEN&gt;</span> ห้ามถ่ายภาพ/แคปจอที่มี Token จริงไปแชร์ต่อ และห้ามส่ง Token ในแชตกลุ่ม</p></div>
     <div class="callout info" style="margin:0"><h3>🛠️ คำสั่งดูแลระบบที่ควรรู้</h3><p><b>hermes tools</b> — เลือกเปิด/ปิดเครื่องมือของ Agent · <b>hermes update</b> — อัปเดตเป็นเวอร์ชันล่าสุด · <b>hermes doctor</b> — เจอปัญหาอะไรให้รันตัวนี้ก่อนเสมอ แล้วอ่านคำวินิจฉัยของมัน</p></div>
   </div>
-  <span class="snum">23 / 24</span>
+  <span class="snum">25 / 26</span>
 </section>
 
 <!-- 24 SUMMARY -->
@@ -684,15 +735,15 @@ hermes gateway start</div>
   <div class="grid3">
     <div class="card"><h3>ช่วงที่ 1 · สมัคร</h3><ul class="checks"><li>สมัคร + ยืนยันอีเมลแล้ว</li><li>Home Region = <b>ap-singapore-1</b></li><li>รู้โควตา 2 OCPU / 12 GB / 200 GB</li></ul></div>
     <div class="card"><h3>ช่วงที่ 2 · Network</h3><ul class="checks"><li>VCN สร้างด้วย <b>Wizard</b></li><li>Public Subnet 10.0.0.0/24 พร้อม</li><li>Security List เปิด <b>พอร์ต 22</b> แล้ว</li></ul></div>
-    <div class="card"><h3>ช่วงที่ 3 · Instance</h3><ul class="checks"><li>Image ARM + Shape <b>A1.Flex</b></li><li>ติ๊ก Assign Public IPv4 ได้</li><li>เก็บ Private Key + SSH เข้าได้</li></ul></div>
+    <div class="card"><h3>ช่วงที่ 3 · Instance</h3><ul class="checks"><li>Image ARM + Shape <b>A1.Flex</b></li><li>Boot Volume <b>VPU 10</b> · 50 GB (เครื่องเดียวเต็มโควตาใช้ <b>200 GB</b>)</li><li>ติ๊ก Assign Public IPv4 ได้</li><li>เก็บ Private Key + SSH เข้าได้</li></ul></div>
   </div>
   <div class="grid2" style="margin-top:16px">
     <div class="card"><h3>ภาคเสริม · OCI CLI</h3><ul class="checks"><li>ติดตั้ง OCI CLI + <b>oci setup config</b> แล้ว</li><li>รู้กติกา Agent: ห้าม terminate เอง ต้องยืนยันก่อน</li></ul></div>
     <div class="card"><h3>ช่วงที่ 5 · Hermes บน OL9</h3><ul class="checks"><li>ลงแพ็กเกจพื้นฐานด้วย <b>dnf</b> (git + เปิด EPEL ลง ripgrep)</li><li>รันตัวติดตั้ง Hermes ในนาม <b>opc — ไม่ใช้ sudo</b></li><li><b>hermes doctor</b> ผ่าน + <b>hermes setup</b> ตั้ง Token เรียบร้อย</li></ul></div>
   </div>
   <div class="callout ok"><h3>🚀 ก้าวต่อไปหลังคลาสนี้</h3><p>เครื่อง A1 Always Free เครื่องนี้คือบ้านของ <b>Hermes Agent</b> ที่เพิ่งติดตั้งกันในคลาส — เก็บ Private Key และ Public IP ของเครื่องไว้ให้พร้อม ห้ามลบเครื่องทิ้ง และใช้คำสั่ง <b>hermes</b> / <b>hermes gateway start</b> เริ่มงานกับ Agent ได้ทันที</p></div>
-  <p class="foot-note">ติดตรงไหนระหว่างทำตาม ให้ไล่เช็กตามสไลด์แก้ปัญหา (12) ก่อน — และถ้าเจอ Out of capacity ให้ดูสไลด์ 13–14 ประกอบ</p>
-  <span class="snum">24 / 24</span>
+  <p class="foot-note">ติดตรงไหนระหว่างทำตาม ให้ไล่เช็กตามสไลด์แก้ปัญหา (14) ก่อน — และถ้าเจอ Out of capacity ให้ดูสไลด์ 15–16 ประกอบ</p>
+  <span class="snum">26 / 26</span>
 </section>
 
 </main>
@@ -701,7 +752,7 @@ hermes gateway start</div>
 <div class="toc" id="toc" role="dialog" aria-label="สารบัญสไลด์">
   <div class="toc-inner">
     <button class="close" style="appearance:none;background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:'Segoe UI',sans-serif;font-weight:600;border-radius:999px;padding:8px 16px;cursor:pointer;min-height:40px" id="tocClose">✕ ปิด</button>
-    <h2>สารบัญ — 24 สไลด์</h2>
+    <h2>สารบัญ — 26 สไลด์</h2>
     <div id="tocList"></div>
   </div>
 </div>
@@ -709,7 +760,7 @@ hermes gateway start</div>
 <!-- NAV BAR -->
 <nav class="navbar" aria-label="ตัวควบคุมสไลด์">
   <button id="btnPrev" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button>
-  <span class="counter" id="counter">1 / 24</span>
+  <span class="counter" id="counter">1 / 26</span>
   <button id="btnNext" aria-label="สไลด์ถัดไป">ถัดไป →</button>
   <span class="sep"></span>
   <button id="btnToc">☰ สารบัญ</button>
