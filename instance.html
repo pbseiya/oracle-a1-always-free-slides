@@ -43,7 +43,7 @@
   <h1>สร้าง A1 Instance จากหน้าจอจริง<br>Out of Capacity → Save as Stack → PAYG</h1>
   <p class="lead">บันทึกการซ้อมสร้างเครื่องจริงทีละขั้น: เช็กเครดิตทดลอง SGD 400 → สร้าง VM.Standard.A1.Flex 2 OCPU / 12 GB → ชน Out of Capacity → เก็บงานเป็น Stack แล้วลอง Apply → อัปเกรด Pay As You Go → รอเมลยืนยัน → Apply รอบใหม่สำเร็จ ได้เครื่องจริง พร้อมเช็กยอดวันแรก SGD 0.00</p>
   <div class="chips">
-    <span>เครดิตทดลอง SGD 400</span><span>A1.Flex 2 OCPU / 12 GB</span><span>Boot volume 200 GB / VPU 10</span><span>Save as Stack</span><span>รอเมลยืนยัน PAYG</span><span>ตอนจบ: Apply สำเร็จ ได้เครื่องแล้ว</span><span>ภาคผนวก: chmod 600 · เปลี่ยนชื่อ host · Budget alert</span>
+    <span>เครดิตทดลอง SGD 400</span><span>A1.Flex 2 OCPU / 12 GB</span><span>Boot volume 200 GB / VPU 10</span><span>Save as Stack</span><span>รอเมลยืนยัน PAYG</span><span>ตอนจบ: Apply สำเร็จ ได้เครื่องแล้ว</span><span>ภาคผนวก: chmod 600 · เปลี่ยนชื่อ host · Budget alert · เวลาไทย</span>
   </div>
   <p class="note">ภาพทั้งหมดในชุดนี้ปิดข้อมูลเฉพาะตัวแล้ว: ชื่อผู้ถือบัญชี อีเมล ที่อยู่ เลข Subscription/CSI/Plan reference, OCID และชื่อ tenancy — ส่วน private key ไม่ปรากฏในภาพชุดนี้ และห้ามนำไฟล์ key จริงมาเผยแพร่เด็ดขาด</p>
 </section>
@@ -231,11 +231,29 @@ sudo sed -i 's/vnic1/oracle-vm-sg-03/g' /etc/hosts</div>
     <li>กด Create แล้วกลับเข้าหน้างบเพื่อ <b>เพิ่ม Alert Rule อีกใบเป็น Forecast Spend 10%</b> ไว้เตือนล่วงหน้า (ฟอร์มตอนสร้างใส่ได้ทีละกฎ) และจำไว้ว่าข้อมูล usage lag ราว 24 ชั่วโมง — Budget เป็นเพียงตัวเตือน ไม่ได้หยุดการคิดเงิน</li>
   </ul>
 </section>
+<section class="slide">
+  <div class="stephead"><span class="stepno">ภาคผนวก 5</span><h2>ตั้งเวลาเครื่องเป็นเวลาไทย (Asia/Bangkok)</h2></div>
+  <div class="term"><span class="c"># เครื่อง OCI ตั้งต้นเป็น GMT (UTC) — ช้ากว่าไทย 7 ชั่วโมง</span>
+date
+<span class="c"># Mon Nov  2 04:11:39 PM GMT 2026  (= 23:11 เวลาไทย)</span>
+
+<span class="c"># เปลี่ยนโซนเวลาเป็นประเทศไทย</span>
+sudo timedatectl set-timezone Asia/Bangkok
+
+<span class="c"># ตรวจผล — ต้องเห็น Time zone: Asia/Bangkok (ICT, +0700)</span>
+timedatectl
+date</div>
+  <ul class="points">
+    <li>ค่าเริ่มต้นของ instance บน OCI คือ <b>GMT/UTC</b> เวลาในเครื่องและใน log จึงช้ากว่าไทย 7 ชั่วโมง — ไม่ใช่นาฬิกาเครื่องผิด แค่โซนเวลาคนละตัวกัน</li>
+    <li><b>timedatectl set-timezone Asia/Bangkok</b> มีผลทันที ไม่ต้อง reboot และไม่ต้องล็อกอินใหม่ จากนั้นคำสั่ง <b>date</b> จะแสดงเวลาไทยพร้อมโซน <b>ICT</b></li>
+    <li>ข้อควรจำ: หน้า <b>OCI Console แสดงเวลาเป็น UTC เสมอ</b> — เวลาเทียบ log ระหว่าง Console กับในเครื่อง ให้เผื่อส่วนต่าง 7 ชั่วโมงไว้ จะได้ไม่งงเวลาดูเวลาเครื่องเสียหรือ Apply job</li>
+  </ul>
+</section>
 <section class="slide closing">
   <h2>จบเรื่อง: PAYG ผ่าน + ได้เครื่องแล้ว — เหลืออะไรก่อนวันสอน</h2>
   <ul class="points big">
     <li><b>PAYG มีผลแล้วและ Stack Apply สำเร็จ</b> — เครื่อง oracle-vm-sg-03 ถูกสร้างเรียบร้อย ไม่ต้อง Apply ซ้ำ (กด Apply ซ้ำอีกก็ไม่สร้างเครื่องเพิ่ม เพราะ Terraform จำ state ไว้)</li>
-    <li>SSH เข้าไม่ได้ (สิทธิ์ไฟล์ key / ssh-agent), อยากเปลี่ยนชื่อเครื่องจาก vnic1 หรือตั้ง Budget เฝ้าค่าใช้จ่าย: ดู <b>สไลด์ภาคผนวก</b>ก่อนสไลด์นี้ (chmod 600, การเปลี่ยน hostname ใน OS และวิธีสร้าง Budget alert จากหน้าจอจริง)</li>
+    <li>SSH เข้าไม่ได้ (สิทธิ์ไฟล์ key / ssh-agent), อยากเปลี่ยนชื่อเครื่องจาก vnic1 หรือตั้ง Budget เฝ้าค่าใช้จ่าย: ดู <b>สไลด์ภาคผนวก</b>ก่อนสไลด์นี้ (chmod 600, การเปลี่ยน hostname ใน OS, วิธีสร้าง Budget alert จากหน้าจอจริง และการตั้งเวลาเครื่องเป็นเวลาไทย)</li>
     <li>เปิด Compute → Instances เช็กสถานะ <b>Running</b> และจด <b>Public IP</b> ของเครื่องไว้ใช้ตอนสอน</li>
     <li>ทดสอบ SSH: <b>ssh -i &lt;ไฟล์ private key&gt; opc@&lt;Public IP&gt;</b> แล้วติดตั้ง Hermes ต่อตาม<a href="index.html">สไลด์หลักของเวิร์กช็อป</a></li>
     <li>ตั้ง <b>Budget alert</b> เตือนค่าใช้จ่าย และ<b>วันถัดไป</b>กลับมาเช็ก Billing → Usage / Cost Analysis อีกครั้ง (ข้อมูล lag ราว 24 ชม.) — ต้องยืนยันว่า Consumption / Overage ยัง <b>SGD 0.00</b> และทุกอย่างอยู่ในโควตา Always Free: A1 รวม ≤ 2 OCPU / 12 GB, storage รวม ≤ 200 GB, VPU = 10</li>
@@ -246,7 +264,7 @@ sudo sed -i 's/vnic1/oracle-vm-sg-03/g' /etc/hosts</div>
 </div>
 <nav id="nav">
   <button id="prev" type="button">← ก่อนหน้า</button>
-  <span id="counter">1/33</span>
+  <span id="counter">1/34</span>
   <button id="next" type="button">ถัดไป →</button>
   <a class="home" href="index.html">สไลด์หลัก</a>
   <a class="home" href="signup.html">วิธีสมัคร</a>
