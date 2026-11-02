@@ -7,6 +7,8 @@
 
 สไลด์เสริม — วิธีสมัคร Oracle Cloud Free Tier ทีละขั้นจากหน้าจอจริง (8 ขั้นตอน ภาพทั้งหมดปิดข้อมูลส่วนตัวแล้ว): https://pbseiya.github.io/oracle-a1-always-free-slides/signup.html
 
+สไลด์เสริม — วิธีสร้าง VCN ด้วย VCN Wizard ทีละขั้นจากหน้าจอจริง (7 ขั้นตอน ภาพทั้งหมดปิดข้อมูลเฉพาะตัวแล้ว): https://pbseiya.github.io/oracle-a1-always-free-slides/vcn.html
+
 ## เนื้อหา (24 สไลด์)
 1. สมัคร Oracle Cloud Always Free — Home Region ap-singapore-1, โควตา A1 รวม 2 OCPU / 12 GB RAM, boot volume รวม 200 GB
 2. ตั้งค่า Network ให้มี Public IPv4 — Create VCN with Internet Connectivity, Public Subnet, Internet Gateway, Security List (22/80/443)
