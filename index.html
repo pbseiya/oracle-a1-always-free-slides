@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<link rel="icon" href="data:,">
+<title>Oracle A1 Always Free — สไลด์สอนสร้าง VM + IPv4</title>
+<style>
+:root{
+  --bg:#060d1f; --bg2:#0a1730; --panel:#0d1e3d; --panel2:#10264a;
+  --line:#1e3a66; --ink:#eef4ff; --muted:#a9bcdc; --dim:#7f96bd;
+  --cyan:#22d3ee; --sky:#38bdf8; --red:#f0522f; --red2:#c74634;
+  --amber:#fbbf24; --green:#34d399; --yellow:#fde047;
+  --radius:18px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Tahoma",system-ui,sans-serif;font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+h1,h2,h3,.disp{font-family:"Segoe UI","Tahoma",sans-serif;line-height:1.2;margin:0}
+code,.mono{font-family:"Consolas",monospace}
+a{color:var(--cyan)}
+img{max-width:100%;display:block}
+
+/* ---------- deck ---------- */
+.deck{max-width:1180px;margin:0 auto;padding:18px 16px 110px}
+.slide{background:linear-gradient(180deg,var(--bg2),#081228);border:1px solid var(--line);border-radius:22px;padding:38px 40px;margin:0 0 22px;position:relative;overflow:hidden}
+.slide::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:linear-gradient(90deg,var(--red),var(--cyan));opacity:.9}
+body.mode-present .deck{padding-top:14px}
+body.mode-present .slide{display:none;min-height:calc(100dvh - 128px)}
+body.mode-present .slide.active{display:block}
+body.mode-scroll .slide{display:block}
+
+.snum{position:absolute;top:16px;right:20px;font-family:"Consolas",monospace;font-size:.78rem;color:var(--dim);letter-spacing:.08em}
+.phase{display:inline-flex;align-items:center;gap:8px;font-family:"Segoe UI",sans-serif;font-weight:700;font-size:.86rem;letter-spacing:.04em;padding:6px 13px;border-radius:999px;border:1px solid var(--line);background:#0b1c3a;color:var(--cyan);margin-bottom:14px}
+.phase.p1{color:#7dd3fc}.phase.p2{color:var(--cyan)}.phase.p3{color:#6ee7b7}.phase.tip{color:var(--amber);border-color:#6b5410;background:#241b04}
+.slide h2{font-size:clamp(1.65rem,3.6vw,2.35rem);font-weight:800;margin-bottom:10px}
+.slide h2 .hl{color:var(--cyan)} .slide h2 .hlr{color:#ff7a5c} .slide h2 .hla{color:var(--amber)} .slide h2 .hlg{color:var(--green)}
+.lead{color:var(--muted);font-size:1.06rem;max-width:62ch;margin:0 0 20px}
+.lead strong{color:var(--ink)}
+
+/* cover */
+.cover{padding:0;display:grid;grid-template-columns:1.05fr .95fr;min-height:560px}
+.cover-txt{padding:42px 40px}
+.cover-txt .live{display:inline-block;background:var(--red);color:#fff;font-family:"Segoe UI",sans-serif;font-weight:700;padding:5px 14px;border-radius:999px;font-size:.88rem;margin-bottom:16px}
+.cover h1{font-size:clamp(2rem,4.6vw,3.15rem);font-weight:800}
+.cover h1 .cyan{color:var(--cyan)} .cover h1 .red{color:#ff6b4a}
+.specrow{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.spec{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:8px 13px;font-weight:600;font-size:.95rem}
+.spec b{color:var(--cyan)}
+.meta{border-top:1px solid var(--line);margin-top:20px;padding-top:16px;color:var(--muted);font-size:.98rem}
+.meta b{color:var(--ink)}
+.cover-art{background:radial-gradient(600px 340px at 70% 20%,rgba(34,211,238,.16),transparent 60%),linear-gradient(160deg,#0a1a38,#060d1f);display:flex;flex-direction:column;justify-content:center;gap:16px;padding:34px 30px;border-left:1px solid var(--line)}
+.term{background:#040a18;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.45)}
+.term-bar{display:flex;align-items:center;gap:7px;background:#0b1c3a;padding:10px 14px;border-bottom:1px solid var(--line)}
+.term-bar span{width:11px;height:11px;border-radius:50%;background:#334155}
+.term-bar span:first-child{background:#f0522f}.term-bar span:nth-child(2){background:#fbbf24}.term-bar span:nth-child(3){background:#34d399}
+.term-bar em{font-style:normal;color:var(--muted);font-size:.85rem;margin-left:6px}
+.term-body{padding:16px 18px;font-size:.95rem}
+.term-body p{margin:0 0 7px;color:var(--ink)}
+.term-body .tdim{color:var(--dim);margin:-3px 0 12px 12px;font-size:.9rem}
+.term-body .tline{border-top:1px dashed #223c68;padding-top:10px;margin-top:4px;color:var(--muted);font-size:.9rem}
+.tg{color:var(--cyan);font-family:ui-monospace,Consolas,monospace;font-size:.82rem;letter-spacing:.05em}
+.tok{color:var(--green)}
+.cover-badges{display:flex;flex-wrap:wrap;gap:8px}
+.cover-badges span{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:5px 13px;font-size:.88rem;font-weight:600;color:var(--cyan)}
+
+/* grids & cards */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
+.card h3{font-size:1.12rem;font-weight:700;margin-bottom:8px}
+.card p,.card li{color:var(--muted);font-size:.99rem}
+.card ul{margin:6px 0 0;padding-left:20px}
+.num-badge{display:inline-flex;width:34px;height:34px;border-radius:10px;background:var(--red);color:#fff;align-items:center;justify-content:center;font-family:"Segoe UI",sans-serif;font-weight:800;margin-bottom:10px}
+.num-badge.c{background:#0891b2}.num-badge.g{background:#059669}.num-badge.a{background:#d97706;color:#111}
+
+.steps{list-style:none;margin:0;padding:0;counter-reset:st}
+.steps li{display:flex;gap:14px;padding:13px 0;border-bottom:1px dashed #223c68}
+.steps li:last-child{border-bottom:0}
+.steps .n{flex:0 0 30px;width:30px;height:30px;border-radius:50%;background:var(--panel2);border:1px solid var(--cyan);color:var(--cyan);display:flex;align-items:center;justify-content:center;font-family:"Consolas",monospace;font-weight:700;font-size:.9rem;margin-top:2px}
+.steps b{color:var(--ink)} .steps span{color:var(--muted)}
+.checks{list-style:none;margin:0;padding:0}
+.checks li{padding:9px 0 9px 30px;position:relative;color:var(--muted);border-bottom:1px dashed #223c68}
+.checks li:last-child{border-bottom:0}
+.checks li::before{content:"✓";position:absolute;left:2px;top:9px;color:var(--green);font-weight:800}
+.checks li b{color:var(--ink)}
+
+.quota{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:6px 0 18px}
+.quota .q{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:18px;text-align:center}
+.quota .big{font-family:"Segoe UI",sans-serif;font-size:2rem;font-weight:800;color:var(--cyan);line-height:1.1}
+.quota .lbl{color:var(--muted);font-size:.93rem;margin-top:4px}
+
+.callout{border-radius:var(--radius);padding:20px 22px;margin:16px 0;border:1px solid}
+.callout.warn{background:#2a1206;border-color:#9a3412}
+.callout.warn h3{color:#fdba74}
+.callout.danger{background:#2b0d0d;border-color:#991b1b}
+.callout.danger h3{color:#fca5a5}
+.callout.ok{background:#06231a;border-color:#065f46}
+.callout.ok h3{color:#6ee7b7}
+.callout.info{background:#082238;border-color:#075985}
+.callout.info h3{color:#7dd3fc}
+.callout h3{font-size:1.1rem;margin-bottom:6px}
+.callout p,.callout li{color:#e7ddcf;font-size:.99rem}
+.callout p{margin:0;color:var(--muted)} .warn p,.danger p{color:#f3e2d3}
+.callout ul{margin:6px 0 0;padding-left:20px}
+
+table{width:100%;border-collapse:collapse;font-size:.97rem;margin:8px 0}
+th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:"Segoe UI",sans-serif;color:var(--cyan);font-weight:700;background:#0b1c3a}
+td{color:var(--muted)} td b,td strong{color:var(--ink)}
+td code{color:#7dd3fc;font-size:.9em}
+
+.codeblock{background:#040a18;border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-family:"Consolas",monospace;font-size:.92rem;line-height:1.7;overflow-x:auto;white-space:pre;color:#c4e2ff;margin:10px 0}
+.codeblock .cm{color:#5b7ba6}.codeblock .ok{color:var(--green)}
+
+/* network diagram */
+.diagram{background:#040a18;border:1px solid var(--line);border-radius:var(--radius);padding:20px;margin:14px 0}
+.diagram .vcn{border:1.5px dashed var(--cyan);border-radius:14px;padding:16px}
+.diagram .vcn-t{font-family:"Segoe UI",sans-serif;font-weight:700;color:var(--cyan);margin-bottom:12px}
+.diagram .subs{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.diagram .sub{border:1px solid var(--line);border-radius:12px;padding:13px;background:var(--panel)}
+.diagram .sub b{color:var(--ink)} .diagram .sub p{margin:3px 0 0;color:var(--muted);font-size:.9rem}
+.diagram .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:14px;font-family:"Consolas",monospace;font-size:.84rem;color:#c4e2ff}
+.diagram .flow .arr{color:var(--cyan)}
+.pill{display:inline-block;border:1px solid var(--line);background:var(--panel2);border-radius:999px;padding:3px 11px;font-size:.86rem;color:var(--ink);font-weight:600}
+.pill.cy{border-color:#155e75;color:#67e8f9}.pill.gr{border-color:#065f46;color:#6ee7b7}.pill.rd{border-color:#991b1b;color:#fca5a5}.pill.am{border-color:#92400e;color:#fcd34d}
+
+/* compare PAYG */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+.vs .col{border-radius:var(--radius);padding:20px;border:1px solid var(--line);background:var(--panel)}
+.vs .col.safe{border-color:#065f46}.vs .col.payg{border-color:#92400e}
+.vs h3{font-size:1.18rem;margin-bottom:4px}
+.vs .tag{font-size:.85rem;font-weight:700;letter-spacing:.03em}
+.vs ul{margin:8px 0 0;padding-left:20px;color:var(--muted);font-size:.98rem}
+.vs ul b{color:var(--ink)}
+
+.kbd{font-family:"Consolas",monospace;background:var(--panel2);border:1px solid var(--line);border-bottom-width:2px;border-radius:6px;padding:1px 7px;font-size:.86em;color:#c4e2ff}
+.path{font-family:"Consolas",monospace;font-size:.94rem;color:#7dd3fc;background:#040a18;border:1px solid var(--line);border-radius:10px;padding:10px 14px;display:block;margin:10px 0;overflow-x:auto;white-space:nowrap}
+.foot-note{color:var(--dim);font-size:.9rem;margin-top:14px}
+
+/* ---------- nav bar ---------- */
+.navbar{position:fixed;left:50%;transform:translateX(-50%);bottom:16px;z-index:60;display:flex;align-items:center;gap:6px;background:rgba(10,23,48,.96);border:1px solid var(--line);border-radius:999px;padding:7px 9px;box-shadow:0 12px 34px rgba(0,0,0,.55);max-width:calc(100vw - 20px);flex-wrap:wrap;justify-content:center}
+.navbar button{appearance:none;border:1px solid transparent;background:transparent;color:var(--ink);font-family:"Segoe UI",sans-serif;font-weight:600;font-size:.92rem;border-radius:999px;padding:8px 13px;cursor:pointer;min-height:40px}
+.navbar button:hover{background:var(--panel2)}
+.navbar button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+.navbar .counter{font-family:"Consolas",monospace;color:var(--muted);font-size:.88rem;padding:0 6px;min-width:58px;text-align:center}
+.navbar .sep{width:1px;height:22px;background:var(--line)}
+
+/* TOC overlay */
+.toc{position:fixed;inset:0;z-index:70;background:rgba(3,7,17,.9);display:none;padding:26px 16px;overflow:auto}
+.toc.open{display:block}
+.toc-inner{max-width:720px;margin:0 auto;background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:26px}
+.toc h2{font-size:1.4rem;margin-bottom:14px}
+.toc a{display:flex;gap:12px;align-items:baseline;color:var(--ink);text-decoration:none;padding:11px 10px;border-radius:10px;border-bottom:1px solid #16294d}
+.toc a:hover{background:var(--panel)}
+.toc a .no{font-family:"Consolas",monospace;color:var(--cyan);font-size:.88rem;flex:0 0 34px}
+.toc a small{color:var(--muted);display:block;font-size:.88rem}
+.toc .close{float:right}
+
+@media (max-width:860px){
+  .deck{padding-bottom:170px}
+  .cover h1{font-size:1.46rem;overflow-wrap:anywhere;word-break:break-word}
+  .cover h1 .cyan{overflow-wrap:anywhere}
+  .navbar{left:0;right:0;transform:none;width:100%;max-width:100%;bottom:0;border-radius:0;border-left:0;border-right:0;border-bottom:0;gap:2px;padding:6px 6px calc(6px + env(safe-area-inset-bottom));flex-wrap:nowrap;justify-content:space-between}
+  .navbar button{padding:6px 6px;font-size:.75rem;min-height:36px;white-space:nowrap}
+  .navbar #btnFs{display:none}
+  .navbar .counter{min-width:42px;font-size:.78rem;padding:0 2px}
+  .navbar .sep{display:none}
+  body.mode-present .slide{padding-bottom:56px}
+  .slide{padding:28px 20px}
+  .cover{grid-template-columns:1fr}
+  .cover-txt{padding:30px 22px}
+  .cover-art{order:-1;padding:22px 18px;border-left:0;border-bottom:1px solid var(--line)}
+  .grid2,.grid3,.vs,.quota,.diagram .subs{grid-template-columns:1fr}
+  body{font-size:16px}
+  .navbar{bottom:10px;border-radius:18px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{
+  .navbar,.toc{display:none!important}
+  body.mode-present .slide{display:block!important;min-height:0}
+  .slide{break-inside:avoid}
+}
+</style>
+</head>
+<body class="mode-present">
+
+<main class="deck" id="deck">
+
+<!-- 1 COVER -->
+<section class="slide cover" data-title="หน้าปก — ติดตั้ง VM.Standard.A1.Flex Always Free">
+  <div class="cover-txt">
+    <span class="live">● LIVE ONLINE · เวิร์กช็อปสุดชิลล์</span>
+    <h1>ติดตั้ง <span class="cyan">VM.Standard.A1.Flex</span><br><span class="red">Always Free</span> ให้ได้ IPv4 ตั้งแต่สร้างเครื่อง</h1>
+    <p class="lead" style="margin-top:14px">เรียนตั้งแต่สมัคร Oracle Cloud Always Free → ตั้งค่า Network ให้รองรับ Public IPv4 → สร้าง Instance พร้อม SSH เข้าเครื่องได้จริง ภายใน 1 ชั่วโมง</p>
+    <div class="specrow">
+      <span class="spec"><b>2 OCPU</b> · 12 GB RAM</span>
+      <span class="spec">ARM Ampere · <b>A1.Flex</b></span>
+      <span class="spec">Region <b>Singapore</b></span>
+      <span class="spec">Public <b>IPv4</b> พร้อมใช้</span>
+    </div>
+    <div class="meta">
+      <div>📅 <b>วันพุธที่ 4 พฤศจิกายน 2569</b> · ⏰ 20:00 – 21:00 น.</div>
+      <div style="margin-top:6px">วิทยากร: <b>Pongsak Boonpalit</b> — AI Specialist · ผู้เชี่ยวชาญด้าน AI, Automation และ Digital Transformation</div>
+      <div style="margin-top:6px">ต่อยอดหลังได้เครื่อง: ติดตั้ง Hermes Agent + รับ Token ทดลองใช้งานฟรี</div>
+    </div>
+  </div>
+<div class="cover-art" aria-hidden="true">
+    <div class="term">
+      <div class="term-bar"><span></span><span></span><span></span><em>oracle-cloud — เส้นทางวันนี้</em></div>
+      <div class="term-body">
+        <p><b class="tg">STEP 1</b> สมัคร Always Free</p>
+        <p class="tdim">└ region: ap-singapore-1 ✓</p>
+        <p><b class="tg">STEP 2</b> สร้าง VCN + Public Subnet</p>
+        <p class="tdim">└ route 0.0.0.0/0 → Internet Gateway ✓</p>
+        <p><b class="tg">STEP 3</b> สร้าง A1.Flex · 2 OCPU / 12 GB</p>
+        <p class="tdim">└ assign public IPv4: <b class="tok">true</b> ✓</p>
+        <p class="tline">instance: <b class="tok">RUNNING</b> · public-ip: <b class="tok">&lt;Public-IP&gt;</b></p>
+        <p class="tline">ssh: <span class="mono">ssh -i &lt;key&gt; ubuntu@&lt;Public-IP&gt;</span> <b class="tok">→ connected ✓</b></p>
+      </div>
+    </div>
+    <div class="cover-badges"><span>ARM Ampere</span><span>Always Free-eligible</span><span>IPv4 พร้อมใช้</span></div>
+  </div>
+  <span class="snum">01 / 19</span>
+</section>
+
+<!-- 2 ROADMAP -->
+<section class="slide" data-title="ภาพรวม 3 ช่วงของวันนี้">
+  <span class="phase">ภาพรวมคอร์ส</span>
+  <h2>วันนี้ทำ <span class="hl">3 ช่วง</span> ตามลำดับ — ข้ามขั้นไม่ได้</h2>
+  <p class="lead">หัวใจของคอร์สนี้คือ <strong>ทำ Network ก่อนสร้างเครื่อง</strong> ถ้าสร้าง Instance ก่อนโดยไม่มี Public Subnet เตรียมไว้ เครื่องจะไม่มี IPv4 ให้ SSH เข้า ต้องลบสร้างใหม่</p>
+  <div class="grid3">
+    <div class="card"><span class="num-badge">1</span><h3>สมัคร Oracle Cloud Always Free</h3><p>สมัครที่ cloud.oracle.com · เลือก Home Region = Singapore · รู้โควตาฟรีให้ชัดก่อนเริ่ม</p><p style="margin-top:8px"><span class="pill cy">ผลลัพธ์: บัญชีพร้อมใช้</span></p></div>
+    <div class="card"><span class="num-badge c">2</span><h3>ตั้งค่า Network ให้รองรับ IPv4</h3><p>สร้าง VCN ด้วย Wizard ให้มี Public Subnet + Internet Gateway + Route ออกเน็ตครบ</p><p style="margin-top:8px"><span class="pill cy">ผลลัพธ์: Subnet พร้อมรับเครื่อง</span></p></div>
+    <div class="card"><span class="num-badge g">3</span><h3>สร้าง A1 Instance</h3><p>เลือก Image ARM + Shape A1.Flex ในโควตา · ผูก Public Subnet เดิม · ติ๊ก Assign Public IPv4</p><p style="margin-top:8px"><span class="pill gr">ผลลัพธ์: เครื่อง Running + มี Public IP</span></p></div>
+  </div>
+  <div class="callout info"><h3>🎯 เป้าหมายตอนจบคลาส</h3><p>ทุกคนมี Instance สถานะ <b>Running</b> เห็น <b>Public IP</b> ในหน้า Instance Details และ SSH เข้าเครื่องตัวเองได้สำเร็จ</p></div>
+  <p class="foot-note">+ <b style="color:var(--amber)">ภาคเสริมท้าย Deck (สไลด์ 15–18):</b> สั่งงานแบบเดียวกันนี้ผ่าน OCI CLI / API เพื่อให้ AI Agent เช่น Hermes Agent ทำงานแทนได้</p>
+  <span class="snum">02 / 19</span>
+</section>
+
+<!-- 3 PHASE 1 STEPS -->
+<section class="slide" data-title="ช่วงที่ 1 — ขั้นตอนสมัคร Oracle Cloud Always Free">
+  <span class="phase p1">ช่วงที่ 1 · สมัครบัญชี</span>
+  <h2>สมัครที่ <span class="hl">cloud.oracle.com</span></h2>
+  <p class="lead">เตรียม 3 อย่างให้พร้อมก่อนเริ่ม: <strong>อีเมล · เบอร์โทรศัพท์ · บัตรสำหรับยืนยันตัวตน</strong> บัตรใช้ยืนยันตัวตนเท่านั้น บัญชี Free Tier ไม่ได้แปลว่าจะถูกตัดเงินเอง</p>
+  <ol class="steps">
+    <li><span class="n">1</span><div><b>กรอกข้อมูลสมัคร</b><br><span>อีเมล เบอร์โทร และบัตรสำหรับยืนยันตัวตนให้ครบตามขั้นตอนบนเว็บ</span></div></li>
+    <li><span class="n">2</span><div><b>ยืนยันอีเมล</b><br><span>เปิดอีเมลที่ Oracle ส่งมาแล้วกดยืนยัน เพื่อเปิดใช้งานบัญชี</span></div></li>
+    <li><span class="n">3</span><div><b>เลือก Home Region = Singapore</b><br><span>ค่าในสไลด์ถัดไป — ขั้นนี้สำคัญที่สุดของการสมัคร เพราะเปลี่ยนทีหลังไม่ได้</span></div></li>
+    <li><span class="n">4</span><div><b>ยังไม่ต้องอัปเกรดเป็น Pay-As-You-Go</b><br><span>อยู่ Free Tier เดิมก็สร้าง A1 แบบ Always Free ได้เลย (ทางเลือก PAYG อยู่สไลด์ Tips พิเศษท้ายคลาส)</span></div></li>
+  </ol>
+  <span class="snum">03 / 19</span>
+</section>
+
+<!-- 4 REGION + QUOTA -->
+<section class="slide" data-title="Home Region Singapore และโควตา Always Free">
+  <span class="phase p1">ช่วงที่ 1 · สมัครบัญชี</span>
+  <h2>Home Region เลือก <span class="hl">ap-singapore-1 (Singapore)</span></h2>
+  <p class="lead">Singapore คือ Region ที่ใกล้ไทยที่สุด หน่วงต่ำสุดสำหรับผู้เรียนในไทย — และ <strong>Home Region เปลี่ยนทีหลังไม่ได้</strong> เลือกผิดต้องสมัครบัญชีใหม่เท่านั้น เช็กตัวสะกดก่อนกดยืนยันทุกครั้ง</p>
+  <h3 class="disp" style="font-size:1.15rem;margin-bottom:10px">โควตา Always Free สำหรับ A1 (รวมทุกเครื่องในบัญชี)</h3>
+  <div class="quota">
+    <div class="q"><div class="big">2 OCPU</div><div class="lbl">A1 รวมกันสูงสุด</div></div>
+    <div class="q"><div class="big">12 GB</div><div class="lbl">RAM รวมกันสูงสุด</div></div>
+    <div class="q"><div class="big">200 GB</div><div class="lbl">Boot / Block Volume รวมสูงสุด</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>แบ่งเครื่องแบบที่ 1 — เครื่องเดียวเต็มโควตา</h3><p>1 เครื่อง × <b style="color:var(--ink)">2 OCPU / 12 GB RAM</b> เหมาะกับรันงานหลักเครื่องเดียวจบ</p></div>
+    <div class="card"><h3>แบ่งเครื่องแบบที่ 2 — แยกสองเครื่อง</h3><p>เครื่องละ <b style="color:var(--ink)">1 OCPU / 6 GB RAM</b> แยกงานออกจากกัน แต่รวมกันห้ามเกินโควตาด้านบน</p></div>
+  </div>
+  <p class="foot-note">ตัวเลขโควตาเป็นแบบ “รวมกันทั้งบัญชี” ไม่ใช่ต่อเครื่อง — สร้างเครื่องที่สองโดยลืมเครื่องแรก คือสาเหตุยอดฮิตที่กดสร้างแล้วเกินโควตา</p>
+  <span class="snum">04 / 19</span>
+</section>
+
+<!-- 5 PHASE 2 PRINCIPLE -->
+<section class="slide" data-title="ช่วงที่ 2 — หลักการ: Instance ต้องอยู่ใน Public Subnet">
+  <span class="phase p2">ช่วงที่ 2 · Network เพื่อ IPv4</span>
+  <h2>หัวใจของ IPv4: เครื่องต้องอยู่ใน <span class="hl">Public Subnet</span> ที่มีทางออกอินเทอร์เน็ต</h2>
+  <p class="lead">Public IP อย่างเดียวไม่พอ — Subnet ต้องมี <strong>Route 0.0.0.0/0 ชี้ไป Internet Gateway</strong> ด้วย เครื่องถึงจะคุยกับอินเทอร์เน็ตและให้เรา SSH เข้าจากข้างนอกได้</p>
+  <div class="diagram">
+    <div class="vcn">
+      <div class="vcn-t">VCN · my-first-vcn · CIDR 10.0.0.0/16</div>
+      <div class="subs">
+        <div class="sub"><b>🌐 Public Subnet — 10.0.0.0/24</b><p>วาง A1 Instance ที่นี่ · Route ออก Internet Gateway · รับ Assign Public IPv4 ได้</p></div>
+        <div class="sub"><b>🔒 Private Subnet — 10.0.1.0/24</b><p>สำหรับงานภายใน · ออกเน็ตผ่าน NAT Gateway · ไม่มี Public IP โดยตรง</p></div>
+      </div>
+      <div class="flow"><span>ผู้เรียน / SSH</span><span class="arr">→</span><span>Internet</span><span class="arr">→</span><span>Internet Gateway</span><span class="arr">→</span><span>Public Subnet</span><span class="arr">→</span><span>A1 Instance (Public IPv4)</span></div>
+    </div>
+  </div>
+  <div class="callout warn"><h3>⚠️ ลำดับสำคัญ</h3><p>สร้าง VCN + Public Subnet ให้เสร็จ <b>ก่อน</b> เปิดหน้าสร้าง Instance เสมอ — เหตุผลอยู่ในสไลด์ “จุดที่เคยติด” ช่วงท้ายของช่วงนี้</p></div>
+  <span class="snum">05 / 19</span>
+</section>
+
+<!-- 6 CREATE VCN -->
+<section class="slide" data-title="สร้าง VCN ด้วย Wizard — Create VCN with Internet Connectivity">
+  <span class="phase p2">ช่วงที่ 2 · Network เพื่อ IPv4</span>
+  <h2>สร้าง VCN ด้วย <span class="hl">Wizard</span> เท่านั้น</h2>
+  <span class="path">Networking &gt; Virtual Cloud Networks &gt; Create VCN with Internet Connectivity</span>
+  <div class="callout danger"><h3>🚫 อย่าเลือก Create แบบ Manual เฉย ๆ</h3><p>แบบ Manual จะ<strong style="color:#fff">ไม่สร้าง Subnet ให้</strong> ต้องไปสร้าง Gateway / Route / Subnet เองทีละชิ้น เสียเวลาและพลาดง่าย — ใช้ Wizard เสมอสำหรับคลาสนี้</p></div>
+  <table>
+    <tr><th style="width:34%">ค่าที่ตั้ง</th><th>ใส่ค่านี้</th></tr>
+    <tr><td><b>VCN Name</b></td><td><code>my-first-vcn</code> (ตั้งชื่อที่จำได้ว่าเป็น VCN หลัก)</td></tr>
+    <tr><td><b>VCN CIDR Block</b></td><td><code>10.0.0.0/16</code></td></tr>
+    <tr><td><b>Public Subnet CIDR</b></td><td><code>10.0.0.0/24</code></td></tr>
+    <tr><td><b>Private Subnet CIDR</b></td><td><code>10.0.1.0/24</code></td></tr>
+  </table>
+  <p class="foot-note">กด Next → Create ตาม Wizard จนเสร็จ แล้วค่อยไปเช็ก Security List ต่อในสไลด์ถัดไป</p>
+  <span class="snum">06 / 19</span>
+</section>
+
+<!-- 7 WIZARD OUTPUT + SECURITY LIST -->
+<section class="slide" data-title="Wizard สร้างอะไรให้บ้าง + Security List เปิดพอร์ต 22 / 80 / 443">
+  <span class="phase p2">ช่วงที่ 2 · Network เพื่อ IPv4</span>
+  <h2>Wizard สร้างให้ครบ — เหลือแค่<span class="hl">เช็กพอร์ต</span></h2>
+  <div class="grid2">
+    <div class="card"><h3>สิ่งที่ Wizard สร้างให้อัตโนมัติ</h3>
+      <ul class="checks">
+        <li><b>Internet Gateway</b> — ประตูออกอินเทอร์เน็ต</li>
+        <li><b>NAT Gateway</b> — ให้ Private Subnet ออกเน็ตได้</li>
+        <li><b>Route Table</b> ของ Public Subnet มี <b>0.0.0.0/0 → Internet Gateway</b></li>
+        <li><b>Security List</b> — ชุดกฎ Firewall ระดับ Subnet</li>
+      </ul>
+    </div>
+    <div class="card"><h3>เช็กเพิ่ม: Ingress Rules ใน Security List</h3><p>เปิด Security List ของ <b style="color:var(--ink)">Public Subnet</b> แล้วเช็ก/เพิ่มกฎเหล่านี้</p>
+      <table>
+        <tr><th>Source</th><th>Protocol</th><th>Port</th><th>ใช้ทำอะไร</th></tr>
+        <tr><td><code>0.0.0.0/0</code></td><td>TCP</td><td><b>22</b></td><td>SSH — จำเป็น</td></tr>
+        <tr><td><code>0.0.0.0/0</code></td><td>TCP</td><td><b>80</b></td><td>เว็บ HTTP (ถ้าจะเปิดเว็บ)</td></tr>
+        <tr><td><code>0.0.0.0/0</code></td><td>TCP</td><td><b>443</b></td><td>เว็บ HTTPS (ถ้าจะเปิดเว็บ)</td></tr>
+      </table>
+    </div>
+  </div>
+  <p class="foot-note">พอร์ต 22 คือประตูเดียวที่ต้องใช้ในคลาสนี้วันนี้ — 80 / 443 เพิ่มเฉพาะคนที่จะเปิดเว็บจากเครื่องนี้</p>
+  <span class="snum">07 / 19</span>
+</section>
+
+<!-- 8 GOTCHA -->
+<section class="slide" data-title="จุดที่เคยติด — Assign Public IPv4 ถูกล็อก">
+  <span class="phase p2">ช่วงที่ 2 · Network เพื่อ IPv4</span>
+  <h2>จุดที่เคยติด: <span class="hlr">Assign Public IPv4 ถูกล็อก</span> 🔒</h2>
+  <div class="grid2">
+    <div class="callout danger" style="margin:0"><h3>❌ อาการที่เจอ</h3><p>ในหน้าสร้าง Instance ถ้ายังเลือก <b>“Create new public subnet”</b> อยู่ ตัวเลือก <b>Assign a public IPv4 address</b> จะถูกล็อก กดติ๊กไม่ได้ — สร้างเครื่องไปก็ไม่มี Public IP</p></div>
+    <div class="callout ok" style="margin:0"><h3>✅ วิธีแก้ที่ถูกต้อง</h3><p>ย้อนไปสร้าง <b>VCN ด้วย Wizard ให้เสร็จก่อน</b> (สไลด์ 06–07) แล้วตอนสร้าง Instance ให้เลือก <b>Public Subnet ที่มีอยู่แล้ว</b> — ช่อง Assign Public IPv4 จะปลดล็อกทันที</p></div>
+  </div>
+  <div class="callout info"><h3>🧭 จำสั้น ๆ</h3><p><b>Subnet สร้างในหน้า Instance = IPv4 ล็อก · Subnet สร้างจาก Wizard มาก่อน = IPv4 ติ๊กได้</b> — นี่คือเหตุผลที่คอร์สนี้บังคับทำช่วงที่ 2 ก่อนช่วงที่ 3</p></div>
+  <span class="snum">08 / 19</span>
+</section>
+
+<!-- 9 PHASE 3 IMAGE + SHAPE -->
+<section class="slide" data-title="ช่วงที่ 3 — เลือก Image ARM และ Shape VM.Standard.A1.Flex">
+  <span class="phase p3">ช่วงที่ 3 · สร้าง Instance</span>
+  <h2>สร้างเครื่อง: Image ต้องเป็น <span class="hlg">ARM</span> · Shape ต้องเป็น <span class="hlg">A1.Flex</span></h2>
+  <span class="path">Compute &gt; Instances &gt; Create Instance</span>
+  <div class="grid2">
+    <div class="card"><span class="num-badge g">A</span><h3>Image — ARM / aarch64 เท่านั้น</h3><p>A1 ใช้ชิป <b style="color:var(--ink)">Ampere ARM</b> เลือกได้เฉพาะ Image ที่เป็น ARM เช่น</p><ul><li><b style="color:var(--ink)">Oracle Linux</b> (for ARM)</li><li><b style="color:var(--ink)">Ubuntu for ARM</b></li></ul><p style="margin-top:8px">เลือก Image x86 มา จะใช้กับ Shape นี้ไม่ได้</p></div>
+    <div class="card"><span class="num-badge g">B</span><h3>Shape — VM.Standard.A1.Flex</h3><p>ต้องเห็นป้าย <span class="pill gr">Always Free-eligible</span> แล้วตั้งขนาดให้อยู่ในโควตา</p><ul><li>เครื่องเดียวจบ: <b style="color:var(--ink)">2 OCPU / 12 GB</b></li><li>แยกสองเครื่อง: เครื่องละ <b style="color:var(--ink)">1 OCPU / 6 GB</b></li></ul></div>
+  </div>
+  <div class="callout warn"><h3>⚠️ เช็กก่อนเลื่อนลง</h3><p>ชื่อ Shape ต้องเป็น <b>VM.Standard.A1.Flex</b> เป๊ะ ๆ และยังมีป้าย Always Free-eligible — ถ้าไม่ตรง ให้ย้อนกลับไปแก้ อย่ากด Create ต่อ</p></div>
+  <span class="snum">09 / 19</span>
+</section>
+
+<!-- 10 NETWORKING + SSH KEY -->
+<section class="slide" data-title="ตั้งค่า Networking ในหน้า Instance + SSH Key">
+  <span class="phase p3">ช่วงที่ 3 · สร้าง Instance</span>
+  <h2>สามช่องที่ตัดสินว่า <span class="hlg">ได้ IPv4 หรือไม่</span></h2>
+  <ol class="steps">
+    <li><span class="n">1</span><div><b>Virtual cloud network</b> — เลือก <span class="mono" style="color:#7dd3fc">my-first-vcn</span><br><span>VCN ที่สร้างด้วย Wizard ในช่วงที่ 2</span></div></li>
+    <li><span class="n">2</span><div><b>Subnet</b> — เลือก <b>Public Subnet ที่มีอยู่แล้ว</b> (10.0.0.0/24)<br><span>ห้ามเลือก Create new public subnet — จะกลับไปติดปัญหาเดิมในสไลด์ 08</span></div></li>
+    <li><span class="n">3</span><div><b>Assign a public IPv4 address</b> — ติ๊กเปิด ✅<br><span>ช่องนี้ต้องติ๊กได้ ถ้าล็อกอยู่ แปลว่าเลือก Subnet ผิด ให้กลับไปข้อ 2</span></div></li>
+    <li><span class="n">4</span><div><b>SSH Key</b> — เลือก <b>Generate a key pair for me</b><br><span>กดดาวน์โหลด <b>Private Key</b> เก็บไว้ให้ดี — ไฟล์นี้คือกุญแจเข้าเครื่อง โหลดซ้ำทีหลังไม่ได้ และห้ามแจกใคร</span></div></li>
+  </ol>
+  <div class="callout ok"><h3>✅ ครบแล้ว กด Create ได้</h3><p>รอสถานะเปลี่ยนเป็น <b>Running</b> แล้วเปิดหน้า Instance Details — ค่า <b>Public IP address</b> ที่เห็น คือ IPv4 ของเครื่องเรา</p></div>
+  <span class="snum">10 / 19</span>
+</section>
+
+<!-- 11 VERIFY SSH -->
+<section class="slide" data-title="เช็กว่า IPv4 ใช้ได้จริง — ทดสอบ SSH">
+  <span class="phase p3">ช่วงที่ 3 · สร้าง Instance</span>
+  <h2>พิสูจน์ว่าใช้ได้จริง: <span class="hlg">SSH เข้าเครื่อง</span></h2>
+  <p class="lead">เปิด Terminal แล้วใช้คำสั่งตาม OS ที่เลือก — แทน <span class="mono" style="color:#7dd3fc">&lt;Public-IP&gt;</span> ด้วยเลข Public IP จากหน้า Instance Details</p>
+  <div class="grid2">
+    <div><h3 class="disp" style="margin-bottom:4px">Oracle Linux — ผู้ใช้ <span class="mono" style="color:#7dd3fc">opc</span></h3>
+      <div class="codeblock">ssh -i &lt;private-key&gt; opc@&lt;Public-IP&gt;</div></div>
+    <div><h3 class="disp" style="margin-bottom:4px">Ubuntu — ผู้ใช้ <span class="mono" style="color:#7dd3fc">ubuntu</span></h3>
+      <div class="codeblock">ssh -i &lt;private-key&gt; ubuntu@&lt;Public-IP&gt;</div></div>
+  </div>
+  <div class="codeblock"><span class="cm"># เข้าได้สำเร็จจะเห็น prompt ของเครื่อง เช่น</span>
+ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4 + SSH ผ่านครบ 🎉</span></div>
+  <div class="callout info"><h3>📌 รู้จัก IP แบบที่ได้วันนี้: Ephemeral</h3><p>Public IP แบบนี้ผูกกับ VNIC ของเครื่องไปจนกว่าจะ <b>Terminate</b> เครื่อง ถ้าต้องการ IP คงที่ไว้ย้ายเครื่องทีหลัง ค่อยไปจอง <b>Reserved Public IP</b> แล้ว Assign ให้ VNIC (สไลด์ 14)</p></div>
+  <span class="snum">11 / 19</span>
+</section>
+
+<!-- 12 TROUBLESHOOT -->
+<section class="slide" data-title="แก้ปัญหา — ไม่มี Public IP หรือ SSH ไม่เข้า เช็ก 4 จุดตามลำดับ">
+  <span class="phase p3">ช่วงที่ 3 · สร้าง Instance</span>
+  <h2>ไม่มี Public IP / SSH ไม่เข้า — <span class="hl">เช็ก 4 จุดตามลำดับ</span></h2>
+  <p class="lead">อย่าเดาสุ่ม ไล่จากนอกเข้าในตามนี้ ส่วนใหญ่จบที่ข้อใดข้อหนึ่ง</p>
+  <ol class="steps">
+    <li><span class="n">1</span><div><b>อยู่ Public Subnet หรือเปล่า?</b><br><span>เปิด Instance Details เช็ก Subnet — ถ้าเป็น Private Subnet จะไม่มี Public IP ตั้งแต่ต้น</span></div></li>
+    <li><span class="n">2</span><div><b>Route ถูกต้องไหม?</b><br><span>Route Table ของ Public Subnet ต้องมี <span class="mono" style="color:#7dd3fc">0.0.0.0/0 → Internet Gateway</span></span></div></li>
+    <li><span class="n">3</span><div><b>Security List เปิดพอร์ต 22 หรือยัง?</b><br><span>Ingress Rule ต้องอนุญาต <span class="mono" style="color:#7dd3fc">0.0.0.0/0 · TCP · 22</span></span></div></li>
+    <li><span class="n">4</span><div><b>Firewall ใน OS เปิดพอร์ตนั้นหรือเปล่า?</b><br><span>กฎใน Cloud ผ่านแล้ว แต่ Firewall ภายในตัว OS ยังบล็อกได้ — เช็กเป็นจุดสุดท้าย</span></div></li>
+  </ol>
+  <p class="foot-note">เช็กเพิ่มตอน SSH: ใช้ Private Key ไฟล์ที่โหลดตอนสร้างเครื่อง · ชื่อผู้ใช้ตรงกับ OS (opc = Oracle Linux, ubuntu = Ubuntu) · พิมพ์ Public IP ไม่ผิด</p>
+  <span class="snum">12 / 19</span>
+</section>
+
+<!-- 13 PAYG TIPS -->
+<section class="slide" data-title="Tips พิเศษ — Free Tier เดิม vs อัปเกรด Pay As You Go (PAYG)">
+  <span class="phase tip">Tips พิเศษ · อ่านก่อนตัดสินใจ</span>
+  <h2>อีกวิธีให้ได้ A1 ง่ายขึ้น: อัปเกรดเป็น <span class="hla">Pay As You Go</span></h2>
+  <p class="lead">บัญชีแบบ PAYG มีโอกาสสร้าง A1 สำเร็จ / ได้ Capacity สูงกว่า Free Tier ล้วน ๆ — แต่ <strong>“อัปเกรด” ไม่ได้แปลว่า “ใช้เกินโควตาฟรีได้ฟรี”</strong> อ่านกล่องเตือนด้านล่างให้จบก่อนตัดสินใจ</p>
+  <div class="vs">
+    <div class="col safe">
+      <span class="tag" style="color:var(--green)">ทางที่ 1 · ปลอดภัยสุด</span>
+      <h3>อยู่ Free Tier เดิม</h3>
+      <ul><li><b>ไม่มีค่าใช้จ่าย</b> — ไม่มีอะไรให้ตัดบัตรเกินโควตา</li><li>สร้าง A1 Always Free ได้ตามปกติแบบที่ทำในคลาสนี้</li><li>ข้อเสีย: <b>Capacity หายาก</b> โดยเฉพาะ Singapore ช่วงคนแย่งกัน</li></ul>
+    </div>
+    <div class="col payg">
+      <span class="tag" style="color:var(--amber)">ทางที่ 2 · โอกาสได้เครื่องสูงกว่า</span>
+      <h3>อัปเกรดเป็น PAYG</h3>
+      <ul><li><b>โอกาสสร้าง A1 สำเร็จสูงกว่า</b> เข้าถึง Capacity ได้มากกว่า</li><li>ทรัพยากรในโควตา Always Free ยังใช้ฟรีเหมือนเดิม</li><li>ข้อควรระวัง: <b>เกินโควตา = คิดเงินจริง ตัดบัตรจริง</b> ต้องคุมเองตลอด</li></ul>
+    </div>
+  </div>
+  <div class="callout danger"><h3>🚨 PAYG ฟรีเฉพาะ “ในโควตา + Shape ที่ Eligible” เท่านั้น</h3>
+    <ul>
+      <li>ฟรีเฉพาะ A1 รวม <b>ไม่เกิน 2 OCPU / 12 GB RAM</b> และ Boot/Block Volume รวม <b>ไม่เกิน 200 GB</b></li>
+      <li>ต้องเป็น Resource ที่ขึ้นว่า <b>Always Free-eligible</b> เท่านั้น — เลือก Shape อื่นที่ไม่ Eligible, สร้างเกินโควตา หรือเปิด Resource เสริมที่คิดเงิน <b>ระบบคิดค่าใช้จ่ายจริงและตัดบัตรได้ทันที</b></li>
+    </ul>
+  </div>
+  <div class="card"><h3>🛡️ Guardrail สำหรับคนเลือก PAYG — ทำครบทุกข้อ</h3>
+    <ul class="checks">
+      <li>ก่อนกด Create ทุกครั้ง เช็กว่า Shape เป็น <b>VM.Standard.A1.Flex</b> + มีป้าย <b>Always Free-eligible</b></li>
+      <li><b>อย่าสร้างเครื่องเกินโควตา</b> 2 OCPU / 12 GB RAM / Volume 200 GB (นับรวมทุกเครื่อง)</li>
+      <li>ตั้ง <b>Budget Alert แจ้งเตือนอีเมล</b> และหมั่นตรวจ <b>Cost Analysis</b> ว่าค่าใช้จ่ายยังเป็น 0</li>
+      <li><b>ลบ Resource ที่ไม่ใช้</b> ทิ้งทันที อย่าปล่อยเครื่อง/Volume ค้าง</li>
+      <li>ช่วงแรกหลังอัปเกรด <b>เช็กบิลบ่อย ๆ</b> จนมั่นใจว่าไม่มีรายการคิดเงินโผล่มา</li>
+    </ul>
+  </div>
+  <span class="snum">13 / 19</span>
+</section>
+
+<!-- 14 CAPACITY + RESERVED -->
+<section class="slide" data-title="Out of Capacity ที่ Singapore + Reserved Public IP">
+  <span class="phase tip">Tips · เมื่อสร้างเครื่องไม่ผ่าน</span>
+  <h2>เจอ <span class="hla">“Out of capacity”</span> ที่ Singapore ทำยังไง?</h2>
+  <p class="lead">A1 ฟรีที่ Singapore เต็มบ่อย เพราะทั้งภูมิภาคแย่งโควตาเดียวกัน — ไม่ใช่เราทำผิดขั้นตอน ลองตามนี้ก่อนยอมแพ้</p>
+  <div class="grid2">
+    <div class="card"><h3>🔁 วิธีลองใหม่ให้ได้เครื่อง</h3>
+      <ul class="checks">
+        <li><b>เปลี่ยน Availability Domain</b> แล้วกดสร้างใหม่</li>
+        <li><b>ลองใหม่ช่วงคนน้อย</b> — เช้ามืด / นอกช่วงพีค โอกาสว่างสูงกว่า</li>
+        <li>ถ้ายังไม่ได้และยอมรับเงื่อนไขได้ ดูทางเลือก <b>PAYG ในสไลด์ 13</b> ประกอบการตัดสินใจ</li>
+      </ul>
+    </div>
+    <div class="card"><h3>📌 อยากได้ IP คงที่? ใช้ Reserved Public IP</h3>
+      <ul>
+        <li style="color:var(--muted)">IP วันนี้เป็นแบบ <b style="color:var(--ink)">Ephemeral</b> — ผูกกับ VNIC จนกว่าเครื่องจะถูก Terminate</li>
+        <li style="color:var(--muted)"><b style="color:var(--ink)">Reserved Public IP</b> คือ IP ที่จองไว้เป็นของบัญชี ย้ายไป Assign ให้ VNIC ของเครื่องอื่นต่อได้ เหมาะกับเครื่องที่จะใช้ยาว ๆ / ผูก Domain</li>
+      </ul>
+    </div>
+  </div>
+  <span class="snum">14 / 19</span>
+</section>
+
+<!-- 15 PART 4 - WHY CLI -->
+<section class="slide" data-title="ภาคเสริม — ทำไมต้อง OCI CLI: ให้ AI Agent สั่งแทนได้">
+  <span class="phase tip">ภาคเสริม · OCI CLI สำหรับ AI Agent</span>
+  <h2>ทุกอย่างที่คลิกใน Console <span class="hla">สั่งผ่าน API ได้หมด</span></h2>
+  <p class="lead">Console คือหน้าจอกดปุ่มที่เรียก <strong>OCI API</strong> เบื้องหลัง — <strong>OCI CLI คือเครื่องมือสั่ง API ตัวเดียวกันนั้นจาก Command Line</strong> ผลลัพธ์คือทำซ้ำได้ เขียนสคริปต์ได้ และที่สำคัญ: <strong>AI Agent สั่งแทนเราได้</strong></p>
+  <div class="diagram"><div class="flow" style="margin-top:0"><span>👤 คำสั่งจากผู้ใช้</span><span class="arr">→</span><span>🤖 Hermes Agent</span><span class="arr">→</span><span class="mono">oci cli</span><span class="arr">→</span><span>OCI API</span><span class="arr">→</span><span>☁️ Instance</span></div></div>
+  <div class="grid2">
+    <div class="card"><h3>ติดตั้ง OCI CLI</h3>
+      <div class="codeblock">bash -c "$(curl -L https://raw.githubusercontent.com/oracle/oci-cli/master/scripts/install/install.sh)"</div>
+      <p>รันบนเครื่องที่จะใช้สั่งงาน (เครื่องตัวเองหรือเครื่องที่ Agent รันอยู่) กดรับค่าติดตั้งเริ่มต้นได้เลย</p></div>
+    <div class="card"><h3>เช็กว่าติดตั้งสำเร็จ</h3>
+      <div class="codeblock">oci --version</div>
+      <p>ถ้าแสดงเลขเวอร์ชันกลับมา แปลว่า CLI พร้อมใช้งาน ขั้นต่อไปคือผูก CLI เข้ากับบัญชี Oracle ของเรา</p></div>
+  </div>
+  <span class="snum">15 / 19</span>
+</section>
+
+<!-- 16 PART 4 - SETUP CONFIG -->
+<section class="slide" data-title="ภาคเสริม — ตั้งค่าเชื่อมบัญชีด้วย oci setup config + API Key">
+  <span class="phase tip">ภาคเสริม · OCI CLI สำหรับ AI Agent</span>
+  <h2>ผูก CLI เข้าบัญชี: <span class="hla">oci setup config</span></h2>
+  <ol class="steps">
+    <li><span class="n">1</span><div><b>รันคำสั่งตั้งค่า</b> — <span class="mono" style="color:#7dd3fc">oci setup config</span><br><span>ระบบจะถามทีละข้อ: User OCID · Tenancy OCID · Region ให้ใส่ <b>ap-singapore-1</b> ให้ตรงกับ Home Region</span></div></li>
+    <li><span class="n">2</span><div><b>สร้าง API Signing Key Pair</b><br><span>ตอบให้ CLI สร้าง Key ให้ จะได้ไฟล์ตั้งค่า <span class="mono" style="color:#7dd3fc">~/.oci/config</span> และ Private Key ที่ <span class="mono" style="color:#7dd3fc">~/.oci/oci_api_key.pem</span></span></div></li>
+    <li><span class="n">3</span><div><b>อัปโหลด Public Key ใน Console</b><br><span class="mono" style="color:#7dd3fc">Profile &gt; User settings &gt; API keys &gt; Add API key</span><span> — เช็กว่า Fingerprint ที่ Console แสดง ตรงกับในไฟล์ config</span></div></li>
+    <li><span class="n">4</span><div><b>ทดสอบการเชื่อมต่อ</b><br><span class="mono" style="color:#7dd3fc">oci iam availability-domain list</span><span> — ถ้าได้รายการ Availability Domain กลับมา แปลว่า CLI คุยกับบัญชีเราได้แล้ว</span></div></li>
+  </ol>
+  <div class="callout danger"><h3>🚨 ความปลอดภัย — อ่านก่อนให้ Agent ใช้ Key นี้</h3>
+    <ul>
+      <li><b>Private Key = รหัสผ่านของบัญชี</b> ห้ามส่งในแชต อีเมล หรือแปะในโค้ด/สคริปต์ที่แชร์ต่อเด็ดขาด</li>
+      <li>ตั้งสิทธิ์ไฟล์ให้ <b>เฉพาะเจ้าของอ่านได้เท่านั้น</b> (เช่น chmod 600)</li>
+      <li>ให้ Agent ใช้ <b>User / Policy แยกที่จำกัดสิทธิ์เท่าที่จำเป็น</b> ไม่ใช้บัญชีหลักสิทธิ์เต็ม</li>
+      <li>รัน CLI + Agent บน <b>เครื่องที่ไว้ใจได้เท่านั้น</b></li>
+    </ul>
+  </div>
+  <span class="snum">16 / 19</span>
+</section>
+
+<!-- 17 PART 4 - LAUNCH WORKFLOW -->
+<section class="slide" data-title="ภาคเสริม — ตัวอย่าง Workflow สร้าง A1 ด้วย CLI ทีละขั้น">
+  <span class="phase tip">ภาคเสริม · OCI CLI สำหรับ AI Agent</span>
+  <h2>สร้าง A1 ด้วยคำสั่ง — <span class="hla">ค้นหาก่อน แล้วค่อยสร้าง</span></h2>
+  <p class="lead">ค่าที่เป็น <span class="mono" style="color:#fcd34d">&lt;...&gt;</span> คือ <strong>Placeholder</strong> ให้แทนด้วยค่าจริงจากผลลัพธ์คำสั่งค้นหาของบัญชีตัวเอง — ห้ามเดา OCID เอง</p>
+  <h3 class="disp" style="margin-bottom:4px">ขั้นที่ 1 · ค้นหาค่าที่ต้องใช้ก่อนสร้าง</h3>
+  <div class="codeblock"><span class="cm"># ดู Availability Domain</span>
+oci iam availability-domain list
+
+<span class="cm"># หา Image ARM ที่ใช้กับ Shape A1.Flex ได้</span>
+oci compute image list --shape VM.Standard.A1.Flex
+
+<span class="cm"># เอา Public Subnet OCID ของ VCN ที่สร้างในช่วงที่ 2</span>
+oci network subnet list</div>
+  <h3 class="disp" style="margin-bottom:4px">ขั้นที่ 2 · สั่งสร้าง Instance</h3>
+  <div class="codeblock">oci compute instance launch \
+  --availability-domain &lt;AD&gt; \
+  --compartment-id &lt;COMPARTMENT_OCID&gt; \
+  --shape VM.Standard.A1.Flex \
+  --shape-config '{"ocpus": 2, "memoryInGBs": 12}' \
+  --image-id &lt;IMAGE_OCID&gt; \
+  --subnet-id &lt;PUBLIC_SUBNET_OCID&gt; \
+  --assign-public-ip true \
+  --metadata '{"ssh_authorized_keys": "&lt;SSH_PUBLIC_KEY&gt;"}' \
+  --display-name hermes-a1</div>
+  <div class="callout info"><h3>🔁 เทียบกับช่วงที่ 3 — คือขั้นตอนเดียวกัน แค่เปลี่ยนจาก “คลิก” เป็น “คำสั่ง”</h3><p><b>--shape / --shape-config</b> = เลือก Shape + ขนาด · <b>--image-id</b> = เลือก Image ARM · <b>--subnet-id + --assign-public-ip true</b> = เลือก Public Subnet + ติ๊ก Assign Public IPv4 · <b>ssh_authorized_keys</b> = SSH Key ที่ฝังตอนสร้างเครื่อง</p></div>
+  <span class="snum">17 / 19</span>
+</section>
+
+<!-- 18 PART 4 - MANAGE + AGENT SAFETY -->
+<section class="slide" data-title="ภาคเสริม — จัดการเครื่องผ่าน CLI + กติกาให้ Agent ทำแทนอย่างปลอดภัย">
+  <span class="phase tip">ภาคเสริม · OCI CLI สำหรับ AI Agent</span>
+  <h2>จัดการเครื่องผ่าน CLI — และ<span class="hla">กติกาความปลอดภัยของ Agent</span></h2>
+  <div class="grid2">
+    <div class="card"><h3>คำสั่งจัดการที่ใช้บ่อย</h3>
+      <div class="codeblock"><span class="cm"># ดูเครื่องทั้งหมด</span>
+oci compute instance list
+
+<span class="cm"># ดูรายละเอียดเครื่อง / ดึง VNIC เพื่อดู Public IP</span>
+oci compute instance get --instance-id &lt;INSTANCE_OCID&gt;
+oci compute vnic-attachment list --instance-id &lt;INSTANCE_OCID&gt;
+oci network vnic get --vnic-id &lt;VNIC_OCID&gt;
+
+<span class="cm"># หยุด / เปิดเครื่อง</span>
+oci compute instance action --instance-id &lt;INSTANCE_OCID&gt; --action STOP
+oci compute instance action --instance-id &lt;INSTANCE_OCID&gt; --action START</div>
+    </div>
+    <div>
+      <div class="callout danger" style="margin-top:0"><h3>⛔ Terminate = ทำลายเครื่องถาวร</h3><p>คำสั่ง <span class="mono">instance terminate</span> ลบเครื่องทิ้งถาวร — <b>Agent ต้องขอให้ผู้ใช้ยืนยันก่อนทุกครั้ง ห้ามลบเองเด็ดขาด</b> ไม่ว่าจะถูกสั่งด้วยภาษาธรรมชาติที่ฟังดูเหมือนอนุญาตแล้วก็ตาม ให้ทวนยืนยันก่อนเสมอ</p></div>
+      <div class="card"><h3>✅ กติกาก่อน Agent กดสร้างทุกครั้ง</h3>
+        <ul class="checks">
+          <li><b>เช็กโควตา Always Free ก่อนสร้าง</b> — รวมไม่เกิน 2 OCPU / 12 GB RAM · Volume ไม่เกิน 200 GB</li>
+          <li>บัญชี <b>PAYG ยิ่งต้องเช็ก</b>: เกินโควตา = มีค่าใช้จ่ายจริง (ย้อนดูสไลด์ 13)</li>
+          <li>Agent ต้อง <b>รายงานคำสั่งที่จะรัน</b> ให้ผู้ใช้เห็นก่อน/ขณะทำ</li>
+          <li>ทำเสร็จให้ <b>รายงานผลกลับ</b>: Public IP + สถานะ Running ให้ผู้ใช้ตรวจเองได้</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <span class="snum">18 / 19</span>
+</section>
+
+<!-- 19 SUMMARY -->
+<section class="slide" data-title="สรุป — Checklist จบคลาส">
+  <span class="phase">สรุปท้ายคลาส</span>
+  <h2>เช็กครบทุกช่อง = <span class="hlg">จบคลาสพร้อมเครื่องใช้งานจริง</span> ✅</h2>
+  <div class="grid3">
+    <div class="card"><h3>ช่วงที่ 1 · สมัคร</h3><ul class="checks"><li>สมัคร + ยืนยันอีเมลแล้ว</li><li>Home Region = <b>ap-singapore-1</b></li><li>รู้โควตา 2 OCPU / 12 GB / 200 GB</li></ul></div>
+    <div class="card"><h3>ช่วงที่ 2 · Network</h3><ul class="checks"><li>VCN สร้างด้วย <b>Wizard</b></li><li>Public Subnet 10.0.0.0/24 พร้อม</li><li>Security List เปิด <b>พอร์ต 22</b> แล้ว</li></ul></div>
+    <div class="card"><h3>ช่วงที่ 3 · Instance</h3><ul class="checks"><li>Image ARM + Shape <b>A1.Flex</b></li><li>ติ๊ก Assign Public IPv4 ได้</li><li>เก็บ Private Key + SSH เข้าได้</li></ul></div>
+  </div>
+  <div class="callout ok"><h3>🚀 ก้าวต่อไปหลังคลาสนี้</h3><p>เครื่อง A1 Always Free เครื่องนี้คือฐานสำหรับติดตั้ง <b>Hermes Agent</b> และรับ Token ทดลองใช้งานฟรี — เก็บ Private Key และ Public IP ของเครื่องไว้ให้พร้อม ห้ามลบเครื่องทิ้ง</p></div>
+  <p class="foot-note">ติดตรงไหนระหว่างทำตาม ให้ไล่เช็กตามสไลด์แก้ปัญหา (12) ก่อน — และถ้าเจอ Out of capacity ให้ดูสไลด์ 13–14 ประกอบ</p>
+  <span class="snum">19 / 19</span>
+</section>
+
+</main>
+
+<!-- TOC -->
+<div class="toc" id="toc" role="dialog" aria-label="สารบัญสไลด์">
+  <div class="toc-inner">
+    <button class="close" style="appearance:none;background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:'Segoe UI',sans-serif;font-weight:600;border-radius:999px;padding:8px 16px;cursor:pointer;min-height:40px" id="tocClose">✕ ปิด</button>
+    <h2>สารบัญ — 19 สไลด์</h2>
+    <div id="tocList"></div>
+  </div>
+</div>
+
+<!-- NAV BAR -->
+<nav class="navbar" aria-label="ตัวควบคุมสไลด์">
+  <button id="btnPrev" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button>
+  <span class="counter" id="counter">1 / 19</span>
+  <button id="btnNext" aria-label="สไลด์ถัดไป">ถัดไป →</button>
+  <span class="sep"></span>
+  <button id="btnToc">☰ สารบัญ</button>
+  <button id="btnMode">โหมดเลื่อนอ่าน</button>
+  <button id="btnFs">⛶ เต็มจอ</button>
+</nav>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var total = slides.length, cur = 0;
+  var counter = document.getElementById('counter');
+  var btnMode = document.getElementById('btnMode');
+  var toc = document.getElementById('toc');
+  var tocList = document.getElementById('tocList');
+
+  slides.forEach(function(s,i){
+    var a = document.createElement('a');
+    a.href = '#';
+    var t = s.getAttribute('data-title') || ('สไลด์ ' + (i+1));
+    a.innerHTML = '<span class="no">' + String(i+1).padStart(2,'0') + '</span><span>' + t + '</span>';
+    a.addEventListener('click', function(e){ e.preventDefault(); go(i); toc.classList.remove('open'); });
+    tocList.appendChild(a);
+  });
+
+  function present(){ return document.body.classList.contains('mode-present'); }
+  function render(){
+    slides.forEach(function(s,i){ s.classList.toggle('active', i===cur); });
+    counter.textContent = (cur+1) + ' / ' + total;
+    document.getElementById('btnPrev').disabled = cur===0;
+    document.getElementById('btnNext').disabled = cur===total-1;
+  }
+  function go(i){
+    cur = Math.max(0, Math.min(total-1, i));
+    if(present()){ render(); window.scrollTo(0,0); }
+    else{ slides[cur].scrollIntoView({behavior:'smooth', block:'start'}); counter.textContent = (cur+1) + ' / ' + total; }
+  }
+  document.getElementById('btnPrev').addEventListener('click', function(){ go(cur-1); });
+  document.getElementById('btnNext').addEventListener('click', function(){ go(cur+1); });
+  document.getElementById('btnToc').addEventListener('click', function(){ toc.classList.add('open'); });
+  document.getElementById('tocClose').addEventListener('click', function(){ toc.classList.remove('open'); });
+  toc.addEventListener('click', function(e){ if(e.target===toc) toc.classList.remove('open'); });
+  btnMode.addEventListener('click', function(){
+    if(present()){
+      document.body.classList.remove('mode-present'); document.body.classList.add('mode-scroll');
+      btnMode.textContent = 'โหมดนำเสนอ';
+      slides[cur].scrollIntoView();
+    } else {
+      document.body.classList.remove('mode-scroll'); document.body.classList.add('mode-present');
+      btnMode.textContent = 'โหมดเลื่อนอ่าน'; render(); window.scrollTo(0,0);
+    }
+  });
+  document.getElementById('btnFs').addEventListener('click', function(){
+    if(document.fullscreenElement){ document.exitFullscreen(); }
+    else if(document.documentElement.requestFullscreen){ document.documentElement.requestFullscreen(); }
+  });
+  document.addEventListener('keydown', function(e){
+    if(toc.classList.contains('open')){ if(e.key==='Escape') toc.classList.remove('open'); return; }
+    if(e.key==='ArrowRight' || e.key===' ' || e.key==='PageDown'){ e.preventDefault(); go(cur+1); }
+    else if(e.key==='ArrowLeft' || e.key==='PageUp'){ e.preventDefault(); go(cur-1); }
+    else if(e.key==='Home'){ go(0); } else if(e.key==='End'){ go(total-1); }
+  });
+  // track current slide while scrolling in scroll mode
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      if(present()) return;
+      entries.forEach(function(en){ if(en.isIntersecting){ cur = slides.indexOf(en.target); counter.textContent = (cur+1) + ' / ' + total; } });
+    }, {rootMargin:'-40% 0px -50% 0px'});
+    slides.forEach(function(s){ io.observe(s); });
+  }
+  render();
+})();
+</script>
+</body>
+</html>
