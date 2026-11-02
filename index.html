@@ -223,7 +223,7 @@ td code{color:#7dd3fc;font-size:.9em}
     </div>
     <div class="cover-badges"><span>ARM Ampere</span><span>Always Free-eligible</span><span>IPv4 พร้อมใช้</span></div>
   </div>
-  <span class="snum">01 / 19</span>
+  <span class="snum">01 / 24</span>
 </section>
 
 <!-- 2 ROADMAP -->
@@ -237,8 +237,8 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="card"><span class="num-badge g">3</span><h3>สร้าง A1 Instance</h3><p>เลือก Image ARM + Shape A1.Flex ในโควตา · ผูก Public Subnet เดิม · ติ๊ก Assign Public IPv4</p><p style="margin-top:8px"><span class="pill gr">ผลลัพธ์: เครื่อง Running + มี Public IP</span></p></div>
   </div>
   <div class="callout info"><h3>🎯 เป้าหมายตอนจบคลาส</h3><p>ทุกคนมี Instance สถานะ <b>Running</b> เห็น <b>Public IP</b> ในหน้า Instance Details และ SSH เข้าเครื่องตัวเองได้สำเร็จ</p></div>
-  <p class="foot-note">+ <b style="color:var(--amber)">ภาคเสริมท้าย Deck (สไลด์ 15–18):</b> สั่งงานแบบเดียวกันนี้ผ่าน OCI CLI / API เพื่อให้ AI Agent เช่น Hermes Agent ทำงานแทนได้</p>
-  <span class="snum">02 / 19</span>
+  <p class="foot-note">+ <b style="color:var(--amber)">ภาคเสริมท้าย Deck (สไลด์ 15–18):</b> สั่งงานแบบเดียวกันนี้ผ่าน OCI CLI / API เพื่อให้ AI Agent ทำงานแทนได้ · <b style="color:var(--green)">ช่วงที่ 5 (สไลด์ 19–23):</b> ติดตั้ง Hermes Agent บน Oracle Linux 9 — ขั้นสุดท้ายของวันนี้</p>
+  <span class="snum">02 / 24</span>
 </section>
 
 <!-- 3 PHASE 1 STEPS -->
@@ -252,7 +252,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <li><span class="n">3</span><div><b>เลือก Home Region = Singapore</b><br><span>ค่าในสไลด์ถัดไป — ขั้นนี้สำคัญที่สุดของการสมัคร เพราะเปลี่ยนทีหลังไม่ได้</span></div></li>
     <li><span class="n">4</span><div><b>ยังไม่ต้องอัปเกรดเป็น Pay-As-You-Go</b><br><span>อยู่ Free Tier เดิมก็สร้าง A1 แบบ Always Free ได้เลย (ทางเลือก PAYG อยู่สไลด์ Tips พิเศษท้ายคลาส)</span></div></li>
   </ol>
-  <span class="snum">03 / 19</span>
+  <span class="snum">03 / 24</span>
 </section>
 
 <!-- 4 REGION + QUOTA -->
@@ -271,7 +271,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="card"><h3>แบ่งเครื่องแบบที่ 2 — แยกสองเครื่อง</h3><p>เครื่องละ <b style="color:var(--ink)">1 OCPU / 6 GB RAM</b> แยกงานออกจากกัน แต่รวมกันห้ามเกินโควตาด้านบน</p></div>
   </div>
   <p class="foot-note">ตัวเลขโควตาเป็นแบบ “รวมกันทั้งบัญชี” ไม่ใช่ต่อเครื่อง — สร้างเครื่องที่สองโดยลืมเครื่องแรก คือสาเหตุยอดฮิตที่กดสร้างแล้วเกินโควตา</p>
-  <span class="snum">04 / 19</span>
+  <span class="snum">04 / 24</span>
 </section>
 
 <!-- 5 PHASE 2 PRINCIPLE -->
@@ -290,7 +290,7 @@ td code{color:#7dd3fc;font-size:.9em}
     </div>
   </div>
   <div class="callout warn"><h3>⚠️ ลำดับสำคัญ</h3><p>สร้าง VCN + Public Subnet ให้เสร็จ <b>ก่อน</b> เปิดหน้าสร้าง Instance เสมอ — เหตุผลอยู่ในสไลด์ “จุดที่เคยติด” ช่วงท้ายของช่วงนี้</p></div>
-  <span class="snum">05 / 19</span>
+  <span class="snum">05 / 24</span>
 </section>
 
 <!-- 6 CREATE VCN -->
@@ -307,7 +307,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <tr><td><b>Private Subnet CIDR</b></td><td><code>10.0.1.0/24</code></td></tr>
   </table>
   <p class="foot-note">กด Next → Create ตาม Wizard จนเสร็จ แล้วค่อยไปเช็ก Security List ต่อในสไลด์ถัดไป</p>
-  <span class="snum">06 / 19</span>
+  <span class="snum">06 / 24</span>
 </section>
 
 <!-- 7 WIZARD OUTPUT + SECURITY LIST -->
@@ -333,7 +333,7 @@ td code{color:#7dd3fc;font-size:.9em}
     </div>
   </div>
   <p class="foot-note">พอร์ต 22 คือประตูเดียวที่ต้องใช้ในคลาสนี้วันนี้ — 80 / 443 เพิ่มเฉพาะคนที่จะเปิดเว็บจากเครื่องนี้</p>
-  <span class="snum">07 / 19</span>
+  <span class="snum">07 / 24</span>
 </section>
 
 <!-- 8 GOTCHA -->
@@ -345,7 +345,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="callout ok" style="margin:0"><h3>✅ วิธีแก้ที่ถูกต้อง</h3><p>ย้อนไปสร้าง <b>VCN ด้วย Wizard ให้เสร็จก่อน</b> (สไลด์ 06–07) แล้วตอนสร้าง Instance ให้เลือก <b>Public Subnet ที่มีอยู่แล้ว</b> — ช่อง Assign Public IPv4 จะปลดล็อกทันที</p></div>
   </div>
   <div class="callout info"><h3>🧭 จำสั้น ๆ</h3><p><b>Subnet สร้างในหน้า Instance = IPv4 ล็อก · Subnet สร้างจาก Wizard มาก่อน = IPv4 ติ๊กได้</b> — นี่คือเหตุผลที่คอร์สนี้บังคับทำช่วงที่ 2 ก่อนช่วงที่ 3</p></div>
-  <span class="snum">08 / 19</span>
+  <span class="snum">08 / 24</span>
 </section>
 
 <!-- 9 PHASE 3 IMAGE + SHAPE -->
@@ -358,7 +358,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="card"><span class="num-badge g">B</span><h3>Shape — VM.Standard.A1.Flex</h3><p>ต้องเห็นป้าย <span class="pill gr">Always Free-eligible</span> แล้วตั้งขนาดให้อยู่ในโควตา</p><ul><li>เครื่องเดียวจบ: <b style="color:var(--ink)">2 OCPU / 12 GB</b></li><li>แยกสองเครื่อง: เครื่องละ <b style="color:var(--ink)">1 OCPU / 6 GB</b></li></ul></div>
   </div>
   <div class="callout warn"><h3>⚠️ เช็กก่อนเลื่อนลง</h3><p>ชื่อ Shape ต้องเป็น <b>VM.Standard.A1.Flex</b> เป๊ะ ๆ และยังมีป้าย Always Free-eligible — ถ้าไม่ตรง ให้ย้อนกลับไปแก้ อย่ากด Create ต่อ</p></div>
-  <span class="snum">09 / 19</span>
+  <span class="snum">09 / 24</span>
 </section>
 
 <!-- 10 NETWORKING + SSH KEY -->
@@ -372,7 +372,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <li><span class="n">4</span><div><b>SSH Key</b> — เลือก <b>Generate a key pair for me</b><br><span>กดดาวน์โหลด <b>Private Key</b> เก็บไว้ให้ดี — ไฟล์นี้คือกุญแจเข้าเครื่อง โหลดซ้ำทีหลังไม่ได้ และห้ามแจกใคร</span></div></li>
   </ol>
   <div class="callout ok"><h3>✅ ครบแล้ว กด Create ได้</h3><p>รอสถานะเปลี่ยนเป็น <b>Running</b> แล้วเปิดหน้า Instance Details — ค่า <b>Public IP address</b> ที่เห็น คือ IPv4 ของเครื่องเรา</p></div>
-  <span class="snum">10 / 19</span>
+  <span class="snum">10 / 24</span>
 </section>
 
 <!-- 11 VERIFY SSH -->
@@ -389,7 +389,7 @@ td code{color:#7dd3fc;font-size:.9em}
   <div class="codeblock"><span class="cm"># เข้าได้สำเร็จจะเห็น prompt ของเครื่อง เช่น</span>
 ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4 + SSH ผ่านครบ 🎉</span></div>
   <div class="callout info"><h3>📌 รู้จัก IP แบบที่ได้วันนี้: Ephemeral</h3><p>Public IP แบบนี้ผูกกับ VNIC ของเครื่องไปจนกว่าจะ <b>Terminate</b> เครื่อง ถ้าต้องการ IP คงที่ไว้ย้ายเครื่องทีหลัง ค่อยไปจอง <b>Reserved Public IP</b> แล้ว Assign ให้ VNIC (สไลด์ 14)</p></div>
-  <span class="snum">11 / 19</span>
+  <span class="snum">11 / 24</span>
 </section>
 
 <!-- 12 TROUBLESHOOT -->
@@ -404,7 +404,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
     <li><span class="n">4</span><div><b>Firewall ใน OS เปิดพอร์ตนั้นหรือเปล่า?</b><br><span>กฎใน Cloud ผ่านแล้ว แต่ Firewall ภายในตัว OS ยังบล็อกได้ — เช็กเป็นจุดสุดท้าย</span></div></li>
   </ol>
   <p class="foot-note">เช็กเพิ่มตอน SSH: ใช้ Private Key ไฟล์ที่โหลดตอนสร้างเครื่อง · ชื่อผู้ใช้ตรงกับ OS (opc = Oracle Linux, ubuntu = Ubuntu) · พิมพ์ Public IP ไม่ผิด</p>
-  <span class="snum">12 / 19</span>
+  <span class="snum">12 / 24</span>
 </section>
 
 <!-- 13 PAYG TIPS -->
@@ -439,7 +439,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       <li>ช่วงแรกหลังอัปเกรด <b>เช็กบิลบ่อย ๆ</b> จนมั่นใจว่าไม่มีรายการคิดเงินโผล่มา</li>
     </ul>
   </div>
-  <span class="snum">13 / 19</span>
+  <span class="snum">13 / 24</span>
 </section>
 
 <!-- 14 CAPACITY + RESERVED -->
@@ -462,7 +462,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       </ul>
     </div>
   </div>
-  <span class="snum">14 / 19</span>
+  <span class="snum">14 / 24</span>
 </section>
 
 <!-- 15 PART 4 - WHY CLI -->
@@ -479,7 +479,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       <div class="codeblock">oci --version</div>
       <p>ถ้าแสดงเลขเวอร์ชันกลับมา แปลว่า CLI พร้อมใช้งาน ขั้นต่อไปคือผูก CLI เข้ากับบัญชี Oracle ของเรา</p></div>
   </div>
-  <span class="snum">15 / 19</span>
+  <span class="snum">15 / 24</span>
 </section>
 
 <!-- 16 PART 4 - SETUP CONFIG -->
@@ -500,7 +500,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       <li>รัน CLI + Agent บน <b>เครื่องที่ไว้ใจได้เท่านั้น</b></li>
     </ul>
   </div>
-  <span class="snum">16 / 19</span>
+  <span class="snum">16 / 24</span>
 </section>
 
 <!-- 17 PART 4 - LAUNCH WORKFLOW -->
@@ -529,7 +529,7 @@ oci network subnet list</div>
   --metadata '{"ssh_authorized_keys": "&lt;SSH_PUBLIC_KEY&gt;"}' \
   --display-name hermes-a1</div>
   <div class="callout info"><h3>🔁 เทียบกับช่วงที่ 3 — คือขั้นตอนเดียวกัน แค่เปลี่ยนจาก “คลิก” เป็น “คำสั่ง”</h3><p><b>--shape / --shape-config</b> = เลือก Shape + ขนาด · <b>--image-id</b> = เลือก Image ARM · <b>--subnet-id + --assign-public-ip true</b> = เลือก Public Subnet + ติ๊ก Assign Public IPv4 · <b>ssh_authorized_keys</b> = SSH Key ที่ฝังตอนสร้างเครื่อง</p></div>
-  <span class="snum">17 / 19</span>
+  <span class="snum">17 / 24</span>
 </section>
 
 <!-- 18 PART 4 - MANAGE + AGENT SAFETY -->
@@ -562,10 +562,122 @@ oci compute instance action --instance-id &lt;INSTANCE_OCID&gt; --action START</
       </div>
     </div>
   </div>
-  <span class="snum">18 / 19</span>
+  <span class="snum">18 / 24</span>
 </section>
 
-<!-- 19 SUMMARY -->
+<!-- 19 PART 5 - HERMES OL9 INTRO + COMPARE -->
+<section class="slide" data-title="ช่วงที่ 5 — ติดตั้ง Hermes บน Oracle Linux 9: ต่างจาก Ubuntu ตรงไหน">
+  <span class="phase p3">ช่วงที่ 5 · ติดตั้ง Hermes บน OL9</span>
+  <h2>เครื่องนี้คือ <span class="hlg">Oracle Linux 9</span> ไม่ใช่ Ubuntu — อย่าใช้คำสั่ง apt</h2>
+  <p class="lead">Hermes Agent คือ AI Agent จาก <strong>Nous Research</strong> (GitHub: NousResearch/hermes-agent) ติดตั้งบน Linux ได้ทุกค่ายด้วยสคริปต์ทางการตัวเดียวกัน — แต่ <strong>งานเตรียมเครื่องก่อนติดตั้งต่างกัน</strong> เพราะ OL9 ใช้ <span class="mono" style="color:#7dd3fc">dnf</span> และผู้ใช้เริ่มต้นคือ <span class="mono" style="color:#7dd3fc">opc</span></p>
+  <table>
+    <tr><th style="width:26%">หัวข้อ</th><th style="width:37%">Oracle Linux 9 (เครื่องนี้)</th><th>Ubuntu</th></tr>
+    <tr><td><b>ผู้ใช้เริ่มต้น (SSH)</b></td><td><code>opc</code></td><td><code>ubuntu</code></td></tr>
+    <tr><td><b>ติดตั้งแพ็กเกจ</b></td><td><code>sudo dnf install -y …</code></td><td><code>sudo apt update</code> + <code>sudo apt install -y …</code></td></tr>
+    <tr><td><b>ชื่อแพ็กเกจที่ต่างกัน</b></td><td><code>xz</code> · <code>gcc</code>/<code>make</code> แยกตัว</td><td><code>xz-utils</code> · <code>build-essential</code> ชุดเดียว</td></tr>
+    <tr><td><b>Python ของระบบ</b></td><td>รุ่นเก่า — <b>ห้ามใช้ลง Hermes เอง</b> ให้ตัวติดตั้งดึง Python ของมันเองผ่าน uv</td><td>ใหม่กว่า แต่ก็ยังให้ตัวติดตั้งจัดการเองเช่นกัน</td></tr>
+    <tr><td><b>Firewall / ความปลอดภัยใน OS</b></td><td><b>SELinux enforcing + firewall ในตัว OS เข้มกว่า</b> — เปิดพอร์ตเพิ่มต้องเปิดทั้ง Security List บน Cloud และ firewall ในเครื่อง</td><td>เปิด Security List มักพอสำหรับงานทั่วไป</td></tr>
+  </table>
+  <div class="callout info"><h3>📌 แผนของช่วงนี้ (4 ขั้น)</h3><p><b>ก)</b> SSH เข้าเครื่องในนาม <b>opc</b> เช็กเวอร์ชัน OL9 → <b>ข)</b> ลงแพ็กเกจพื้นฐานด้วย <b>dnf</b> → <b>ค)</b> รันตัวติดตั้ง Hermes ทางการ → <b>ง)</b> ตั้งค่า + เช็กความพร้อมด้วย <b>hermes doctor</b></p></div>
+  <span class="snum">19 / 24</span>
+</section>
+
+<!-- 20 PART 5 - SSH + DNF BASE -->
+<section class="slide" data-title="ช่วงที่ 5 — SSH ในนาม opc + ติดตั้งแพ็กเกจพื้นฐานด้วย dnf">
+  <span class="phase p3">ช่วงที่ 5 · ติดตั้ง Hermes บน OL9</span>
+  <h2>ขั้น ก–ข: เข้าเครื่องในนาม <span class="hlg">opc</span> แล้วลงของพื้นฐานด้วย <span class="hlg">dnf</span></h2>
+  <h3 class="disp" style="margin-bottom:4px">ขั้น ก · SSH เข้าเครื่อง + เช็กว่าเป็น OL9 จริง</h3>
+  <div class="codeblock">ssh -i &lt;private-key&gt; opc@&lt;Public-IP&gt;
+cat /etc/oracle-release
+<span class="cm"># ต้องเห็นประมาณ: Oracle Linux Server release 9.x</span></div>
+  <h3 class="disp" style="margin-bottom:4px">ขั้น ข · ติดตั้งแพ็กเกจพื้นฐานที่ต้องมีก่อน (คำสั่งเดียว)</h3>
+  <div class="codeblock">sudo dnf install -y git curl tar gzip xz coreutils libatomic</div>
+  <table>
+    <tr><th style="width:30%">แพ็กเกจ</th><th>ทำไมต้องมี</th></tr>
+    <tr><td><code>git</code></td><td><b>ตัวเดียวที่ตัวติดตั้งบังคับว่าต้องมีก่อน</b> — ใช้ clone โค้ด Hermes ลงเครื่อง</td></tr>
+    <tr><td><code>curl</code></td><td>ใช้โหลดสคริปต์ตัวติดตั้งทางการ</td></tr>
+    <tr><td><code>tar</code> · <code>gzip</code> · <code>xz</code></td><td>ใช้แตกไฟล์ที่ตัวติดตั้งดาวน์โหลดมา (บน OL9 ชื่อคือ <code>xz</code> ไม่ใช่ <code>xz-utils</code> แบบ Ubuntu)</td></tr>
+    <tr><td><code>coreutils</code></td><td>มี <code>sha256sum</code> สำหรับตรวจความถูกต้องของไฟล์ที่ดาวน์โหลด</td></tr>
+    <tr><td><code>libatomic</code></td><td>จำเป็นสำหรับ <b>Node.js</b> ที่ตัวติดตั้ง Hermes จัดมาให้</td></tr>
+  </table>
+  <div class="callout danger"><h3>🚨 กฎเหล็กของช่วงนี้</h3><p>คำสั่ง <b>dnf ด้านบนใช้ sudo ได้</b> — แต่ <b>ตัวติดตั้ง Hermes ในขั้นต่อไปห้ามรันด้วย sudo ทั้งสคริปต์เด็ดขาด</b> ให้รันในนามผู้ใช้ <b>opc</b> ธรรมดา ไม่งั้นไฟล์และ config ทั้งหมดจะกลายเป็นของ root แล้วใช้งานต่อไม่ได้</p></div>
+  <span class="snum">20 / 24</span>
+</section>
+
+<!-- 21 PART 5 - EPEL RIPGREP FFMPEG -->
+<section class="slide" data-title="ช่วงที่ 5 — ripgrep ผ่าน EPEL และเรื่องของ ffmpeg บน OL9">
+  <span class="phase p3">ช่วงที่ 5 · ติดตั้ง Hermes บน OL9</span>
+  <h2>ของที่ <span class="hlg">ไม่มีใน Repo มาตรฐาน</span> ของ OL9: ripgrep กับ ffmpeg</h2>
+  <p class="lead">Hermes ใช้ <strong>ripgrep</strong> ค้นหาไฟล์/ข้อความ และ <strong>ffmpeg</strong> แปลงไฟล์เสียง — สองตัวนี้ไม่ได้อยู่ใน Repo มาตรฐานของ Oracle Linux 9 ตรง ๆ จัดการตามนี้</p>
+  <div class="grid2">
+    <div class="card"><h3>ripgrep — เปิด EPEL ก่อน แล้วลงได้เลย</h3>
+      <div class="codeblock">sudo dnf install -y oracle-epel-release-el9
+sudo dnf install -y ripgrep</div>
+      <p>แพ็กเกจ <code>oracle-epel-release-el9</code> คือตัวเปิดคลัง EPEL อย่างเป็นทางการสำหรับ OL9 — เปิดแล้ว <code>ripgrep</code> ถึงจะโผล่มาให้ติดตั้ง</p></div>
+    <div class="card"><h3>ffmpeg — ข้ามได้ ไม่ต้องฝืนลง</h3>
+      <ul>
+        <li style="color:var(--muted)"><b style="color:var(--ink)">ไม่มีทั้งใน Repo มาตรฐานและ EPEL ของ OL9</b> (อยู่ค่าย RPM Fusion) — คลาสนี้ไม่ต้องเพิ่ม Repo นอกเพิ่ม</li>
+        <li style="color:var(--muted)">ใช้เฉพาะ <b style="color:var(--ink)">แปลงเสียง TTS เป็น Opus สำหรับส่ง voice ใน Telegram</b> เท่านั้น <b style="color:var(--ink)">ไม่กระทบการใช้งานหลัก</b> ของ Hermes</li>
+        <li style="color:var(--muted)">ตัวติดตั้ง Hermes จะ <b style="color:var(--ink)">พยายามลง ffmpeg ให้เองผ่าน dnf</b> อยู่แล้ว — ถ้าไม่ได้ มันจะเตือนแล้ว <b style="color:var(--ink)">ติดตั้งต่อ ไม่หยุดกลางทาง</b></li>
+      </ul></div>
+  </div>
+  <div class="callout ok"><h3>✅ เช็กก่อนไปต่อ</h3><p>รัน <span class="mono" style="color:#7dd3fc">git --version</span> และ <span class="mono" style="color:#7dd3fc">rg --version</span> ต้องได้เลขเวอร์ชันกลับมาทั้งคู่ — แปลว่าเครื่องพร้อมให้ตัวติดตั้ง Hermes ทำงานแล้ว</p></div>
+  <span class="snum">21 / 24</span>
+</section>
+
+<!-- 22 PART 5 - OFFICIAL INSTALLER -->
+<section class="slide" data-title="ช่วงที่ 5 — รันตัวติดตั้ง Hermes ทางการ (ห้ามใช้ sudo)">
+  <span class="phase p3">ช่วงที่ 5 · ติดตั้ง Hermes บน OL9</span>
+  <h2>ขั้น ค: รันตัวติดตั้งทางการ — <span class="hlg">คำสั่งเดียวจบ</span></h2>
+  <div class="codeblock"><span class="cm"># รันในนามผู้ใช้ opc — ห้าม sudo (เหตุผลอยู่สไลด์ 20)</span>
+curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash -s -- --skip-browser
+
+<span class="cm"># โหลด shell ใหม่ให้เจอคำสั่ง hermes</span>
+source ~/.bashrc</div>
+  <div class="grid2">
+    <div class="card"><h3>ตัวติดตั้งจัดการให้เองทั้งหมด</h3>
+      <ul class="checks">
+        <li>Clone โค้ดลง <b>~/.hermes/hermes-agent</b> (ข้อมูลทั้งหมดของ Hermes อยู่ใต้ <b>~/.hermes/</b>)</li>
+        <li>ติดตั้ง <b>uv + Python ให้เอง</b> — ไม่แตะ python3 รุ่นเก่าของระบบ OL9</li>
+        <li>ติดตั้ง <b>Node.js · ripgrep · ffmpeg</b> ให้เท่าที่ Repo ของเครื่องมี</li>
+        <li>คำสั่ง <b>hermes</b> จะอยู่ที่ <b>~/.local/bin/hermes</b></li>
+      </ul>
+    </div>
+    <div class="card"><h3>ทำไมต้องใส่ <span class="mono" style="color:#7dd3fc">--skip-browser</span></h3>
+      <p>เครื่องนี้เป็น <b style="color:var(--ink)">เซิร์ฟเวอร์ headless</b> ไม่มีหน้าจอ ไม่ต้องใช้ browser automation — flag นี้สั่งให้ <b style="color:var(--ink)">ข้ามการดาวน์โหลด Chromium</b> ประหยัดทั้งเวลาและพื้นที่ดิสก์ในโควตา 200 GB</p>
+      <p style="margin-top:8px">ทีหลังถ้าอยากใช้ฟีเจอร์ browser ค่อยติดตั้งเพิ่มเฉพาะส่วนนั้นได้ ไม่ต้องลง Hermes ใหม่</p></div>
+  </div>
+  <p class="foot-note">ที่มา: วิธีติดตั้งทางการจาก README ของ github.com/NousResearch/hermes-agent และสคริปต์ install.sh ทางการ (ตรวจเมื่อ 2 พ.ย. 2026)</p>
+  <span class="snum">22 / 24</span>
+</section>
+
+<!-- 23 PART 5 - SETUP + FIRST RUN -->
+<section class="slide" data-title="ช่วงที่ 5 — hermes doctor, hermes setup และเริ่มใช้งานครั้งแรก">
+  <span class="phase p3">ช่วงที่ 5 · ติดตั้ง Hermes บน OL9</span>
+  <h2>ขั้น ง: เช็กความพร้อม → ตั้งค่า → <span class="hlg">เริ่มคุยกับ Hermes</span></h2>
+  <div class="codeblock"><span class="cm"># 1) วินิจฉัยก่อน — ทุกอย่างต้องพร้อม</span>
+hermes doctor
+
+<span class="cm"># 2) Wizard ตั้งค่าทุกอย่างในที่เดียว: provider / model / Token</span>
+hermes setup
+
+<span class="cm"># 3) เปลี่ยน model ทีหลังได้ตลอด ไม่ต้องแก้โค้ด</span>
+hermes model
+
+<span class="cm"># 4) เริ่มคุยกับ Agent ใน terminal</span>
+hermes
+
+<span class="cm"># 5) (เสริม) จะคุยผ่าน Telegram / Discord ฯลฯ ให้เปิด gateway</span>
+hermes gateway setup
+hermes gateway start</div>
+  <div class="grid2">
+    <div class="callout warn" style="margin:0"><h3>🔑 เรื่อง Token</h3><p>ตอน <b>hermes setup</b> ให้วาง Token ที่ได้รับสำหรับทดลองใช้งานลงในเครื่องของตัวเอง <b>ในขั้นตอนนั้นเท่านั้น</b> — ในสไลด์นี้ใช้ placeholder <span class="mono">&lt;HERMES_TOKEN&gt;</span> ห้ามถ่ายภาพ/แคปจอที่มี Token จริงไปแชร์ต่อ และห้ามส่ง Token ในแชตกลุ่ม</p></div>
+    <div class="callout info" style="margin:0"><h3>🛠️ คำสั่งดูแลระบบที่ควรรู้</h3><p><b>hermes tools</b> — เลือกเปิด/ปิดเครื่องมือของ Agent · <b>hermes update</b> — อัปเดตเป็นเวอร์ชันล่าสุด · <b>hermes doctor</b> — เจอปัญหาอะไรให้รันตัวนี้ก่อนเสมอ แล้วอ่านคำวินิจฉัยของมัน</p></div>
+  </div>
+  <span class="snum">23 / 24</span>
+</section>
+
+<!-- 24 SUMMARY -->
 <section class="slide" data-title="สรุป — Checklist จบคลาส">
   <span class="phase">สรุปท้ายคลาส</span>
   <h2>เช็กครบทุกช่อง = <span class="hlg">จบคลาสพร้อมเครื่องใช้งานจริง</span> ✅</h2>
@@ -574,9 +686,13 @@ oci compute instance action --instance-id &lt;INSTANCE_OCID&gt; --action START</
     <div class="card"><h3>ช่วงที่ 2 · Network</h3><ul class="checks"><li>VCN สร้างด้วย <b>Wizard</b></li><li>Public Subnet 10.0.0.0/24 พร้อม</li><li>Security List เปิด <b>พอร์ต 22</b> แล้ว</li></ul></div>
     <div class="card"><h3>ช่วงที่ 3 · Instance</h3><ul class="checks"><li>Image ARM + Shape <b>A1.Flex</b></li><li>ติ๊ก Assign Public IPv4 ได้</li><li>เก็บ Private Key + SSH เข้าได้</li></ul></div>
   </div>
-  <div class="callout ok"><h3>🚀 ก้าวต่อไปหลังคลาสนี้</h3><p>เครื่อง A1 Always Free เครื่องนี้คือฐานสำหรับติดตั้ง <b>Hermes Agent</b> และรับ Token ทดลองใช้งานฟรี — เก็บ Private Key และ Public IP ของเครื่องไว้ให้พร้อม ห้ามลบเครื่องทิ้ง</p></div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card"><h3>ภาคเสริม · OCI CLI</h3><ul class="checks"><li>ติดตั้ง OCI CLI + <b>oci setup config</b> แล้ว</li><li>รู้กติกา Agent: ห้าม terminate เอง ต้องยืนยันก่อน</li></ul></div>
+    <div class="card"><h3>ช่วงที่ 5 · Hermes บน OL9</h3><ul class="checks"><li>ลงแพ็กเกจพื้นฐานด้วย <b>dnf</b> (git + เปิด EPEL ลง ripgrep)</li><li>รันตัวติดตั้ง Hermes ในนาม <b>opc — ไม่ใช้ sudo</b></li><li><b>hermes doctor</b> ผ่าน + <b>hermes setup</b> ตั้ง Token เรียบร้อย</li></ul></div>
+  </div>
+  <div class="callout ok"><h3>🚀 ก้าวต่อไปหลังคลาสนี้</h3><p>เครื่อง A1 Always Free เครื่องนี้คือบ้านของ <b>Hermes Agent</b> ที่เพิ่งติดตั้งกันในคลาส — เก็บ Private Key และ Public IP ของเครื่องไว้ให้พร้อม ห้ามลบเครื่องทิ้ง และใช้คำสั่ง <b>hermes</b> / <b>hermes gateway start</b> เริ่มงานกับ Agent ได้ทันที</p></div>
   <p class="foot-note">ติดตรงไหนระหว่างทำตาม ให้ไล่เช็กตามสไลด์แก้ปัญหา (12) ก่อน — และถ้าเจอ Out of capacity ให้ดูสไลด์ 13–14 ประกอบ</p>
-  <span class="snum">19 / 19</span>
+  <span class="snum">24 / 24</span>
 </section>
 
 </main>
@@ -585,7 +701,7 @@ oci compute instance action --instance-id &lt;INSTANCE_OCID&gt; --action START</
 <div class="toc" id="toc" role="dialog" aria-label="สารบัญสไลด์">
   <div class="toc-inner">
     <button class="close" style="appearance:none;background:var(--panel2);border:1px solid var(--line);color:var(--ink);font-family:'Segoe UI',sans-serif;font-weight:600;border-radius:999px;padding:8px 16px;cursor:pointer;min-height:40px" id="tocClose">✕ ปิด</button>
-    <h2>สารบัญ — 19 สไลด์</h2>
+    <h2>สารบัญ — 24 สไลด์</h2>
     <div id="tocList"></div>
   </div>
 </div>
@@ -593,7 +709,7 @@ oci compute instance action --instance-id &lt;INSTANCE_OCID&gt; --action START</
 <!-- NAV BAR -->
 <nav class="navbar" aria-label="ตัวควบคุมสไลด์">
   <button id="btnPrev" aria-label="สไลด์ก่อนหน้า">← ก่อนหน้า</button>
-  <span class="counter" id="counter">1 / 19</span>
+  <span class="counter" id="counter">1 / 24</span>
   <button id="btnNext" aria-label="สไลด์ถัดไป">ถัดไป →</button>
   <span class="sep"></span>
   <button id="btnToc">☰ สารบัญ</button>
