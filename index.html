@@ -237,6 +237,14 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="card"><span class="num-badge g">3</span><h3>สร้าง A1 Instance</h3><p>เลือก Image ARM + Shape A1.Flex ในโควตา · ผูก Public Subnet เดิม · ติ๊ก Assign Public IPv4</p><p style="margin-top:8px"><span class="pill gr">ผลลัพธ์: เครื่อง Running + มี Public IP</span></p></div>
   </div>
   <div class="callout info"><h3>🎯 เป้าหมายตอนจบคลาส</h3><p>ทุกคนมี Instance สถานะ <b>Running</b> เห็น <b>Public IP</b> ในหน้า Instance Details และ SSH เข้าเครื่องตัวเองได้สำเร็จ</p></div>
+  <div class="callout info"><h3>📸 สไลด์ประกอบจากหน้าจอจริง — เปิดดูทีละขั้นได้เลย</h3><p>ทั้ง 4 เรื่องมีสไลด์แยกที่แคปหน้าจอจริงไว้ครบ กดเปิดประกอบระหว่างทำตามได้ตลอดคลาส</p>
+  <p style="margin-top:12px;display:flex;flex-wrap:wrap;gap:10px">
+    <a href="https://pbseiya.github.io/oracle-a1-always-free-slides/signup.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#06202e;font-family:'Segoe UI',sans-serif;font-weight:800;text-decoration:none;padding:11px 20px;border-radius:999px;font-size:1rem">1 · สมัครบัญชี →</a>
+    <a href="https://pbseiya.github.io/oracle-a1-always-free-slides/vcn.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#06202e;font-family:'Segoe UI',sans-serif;font-weight:800;text-decoration:none;padding:11px 20px;border-radius:999px;font-size:1rem">2 · สร้าง VCN →</a>
+    <a href="https://pbseiya.github.io/oracle-a1-always-free-slides/instance.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#06202e;font-family:'Segoe UI',sans-serif;font-weight:800;text-decoration:none;padding:11px 20px;border-radius:999px;font-size:1rem">3 · สร้าง VM (A1 Instance) →</a>
+    <a href="https://pbseiya.github.io/oracle-a1-always-free-slides/instance.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:#2a1a02;font-family:'Segoe UI',sans-serif;font-weight:800;text-decoration:none;padding:11px 20px;border-radius:999px;font-size:1rem">4 · อัปเกรด PAYG →</a>
+  </p>
+  <p style="margin-top:10px">เรื่องที่ 4 อยู่ในชุดสไลด์สร้าง VM ชุดเดียวกัน — ช่วงท้ายของชุดนั้นไล่ตั้งแต่กดอัปเกรด รอเมลยืนยัน จน Plan type เปลี่ยนเป็น Pay As You Go และกลับไป Apply เครื่องสำเร็จ</p></div>
   <p class="foot-note">+ <b style="color:var(--amber)">ภาคเสริมท้าย Deck (สไลด์ 17–20):</b> สั่งงานแบบเดียวกันนี้ผ่าน OCI CLI / API เพื่อให้ AI Agent ทำงานแทนได้ · <b style="color:var(--green)">ช่วงที่ 5 (สไลด์ 21–25):</b> ติดตั้ง Hermes Agent บน Oracle Linux 9 — ขั้นสุดท้ายของวันนี้</p>
   <span class="snum">02 / 26</span>
 </section>
@@ -308,6 +316,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <tr><td><b>Private Subnet CIDR</b></td><td><code>10.0.1.0/24</code></td></tr>
   </table>
   <p class="foot-note">กด Next → Create ตาม Wizard จนเสร็จ แล้วค่อยไปเช็ก Security List ต่อในสไลด์ถัดไป</p>
+  <div class="callout info"><h3>📸 อยากเห็นหน้าจอจริงทีละขั้น?</h3><p>มีสไลด์แยกที่แคปหน้าจอสร้าง VCN จริงไว้ครบทุกขั้น ตั้งแต่เปิด Wizard จน VCN สถานะ Available</p><p style="margin-top:12px"><a href="https://pbseiya.github.io/oracle-a1-always-free-slides/vcn.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#06202e;font-family:'Segoe UI',sans-serif;font-weight:800;text-decoration:none;padding:11px 20px;border-radius:999px;font-size:1rem">วิธีสร้าง VCN ทีละขั้นจากหน้าจอจริง →</a></p></div>
   <span class="snum">06 / 26</span>
 </section>
 
@@ -359,6 +368,7 @@ td code{color:#7dd3fc;font-size:.9em}
     <div class="card"><span class="num-badge g">B</span><h3>Shape — VM.Standard.A1.Flex</h3><p>ต้องเห็นป้าย <span class="pill gr">Always Free-eligible</span> แล้วตั้งขนาดให้อยู่ในโควตา</p><ul><li>เครื่องเดียวจบ: <b style="color:var(--ink)">2 OCPU / 12 GB</b></li><li>แยกสองเครื่อง: เครื่องละ <b style="color:var(--ink)">1 OCPU / 6 GB</b></li></ul></div>
   </div>
   <div class="callout warn"><h3>⚠️ เช็กก่อนเลื่อนลง</h3><p>ชื่อ Shape ต้องเป็น <b>VM.Standard.A1.Flex</b> เป๊ะ ๆ และยังมีป้าย Always Free-eligible — ถ้าไม่ตรง ให้ย้อนกลับไปแก้ อย่ากด Create ต่อ</p></div>
+  <div class="callout info"><h3>📸 อยากเห็นหน้าจอจริงทีละขั้น?</h3><p>มีสไลด์แยกที่แคปหน้าจอสร้าง A1 Instance จริงไว้ครบ ตั้งแต่เปิด Wizard จนได้เครื่อง Running — รวมถึงตอนเจอ Out of capacity และการอัปเกรด PAYG ด้วย</p><p style="margin-top:12px"><a href="https://pbseiya.github.io/oracle-a1-always-free-slides/instance.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:var(--cyan);color:#06202e;font-family:'Segoe UI',sans-serif;font-weight:800;text-decoration:none;padding:11px 20px;border-radius:999px;font-size:1rem">วิธีสร้าง VM ทีละขั้นจากหน้าจอจริง →</a></p></div>
   <span class="snum">09 / 26</span>
 </section>
 
@@ -490,6 +500,7 @@ ubuntu@a1-free:~$ <span class="ok">← แบบนี้แปลว่า IPv4
       <li>ช่วงแรกหลังอัปเกรด <b>เช็กบิลบ่อย ๆ</b> จนมั่นใจว่าไม่มีรายการคิดเงินโผล่มา</li>
     </ul>
   </div>
+  <div class="callout info"><h3>📸 อยากเห็นหน้าจออัปเกรดจริงทีละขั้น?</h3><p>ขั้นตอนอัปเกรด PAYG จากหน้าจอจริง — ตรวจบัตร ส่งคำขอ รอเมลยืนยัน เช็ก Plan type = Pay As You Go และกลับไป Apply เครื่องที่ Save as Stack ไว้จนสำเร็จ — อยู่ในชุดสไลด์สร้าง VM ชุดเดียวกัน ช่วงท้ายของชุด</p><p style="margin-top:12px"><a href="https://pbseiya.github.io/oracle-a1-always-free-slides/instance.html" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;background:var(--amber);color:#2a1a02;font-family:'Segoe UI',sans-serif;font-weight:800;text-decoration:none;padding:11px 20px;border-radius:999px;font-size:1rem">วิธีอัปเกรด PAYG ทีละขั้นจากหน้าจอจริง →</a></p></div>
   <span class="snum">15 / 26</span>
 </section>
 
