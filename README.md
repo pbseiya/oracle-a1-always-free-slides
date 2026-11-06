@@ -5,6 +5,8 @@
 
 เปิดสไลด์: https://pbseiya.github.io/oracle-a1-always-free-slides/
 
+สไลด์คอร์สต่อยอด (พุธ 11 พ.ย. 2569) — ใช้ Hermes บนเครื่อง A1 สร้างเว็บแอพอ่านไฟล์ใบเสร็จ ReceiptAI (22 สไลด์: เกริ่นนำ, สร้างแอพด้วย Prompt, ทดสอบใบเสร็จ 3 ระดับ, ต่อยอดเอกสารอื่น — ไม่มีช่วงติดตั้ง Hermes เริ่มที่การสร้างแอพเลย): https://pbseiya.github.io/oracle-a1-always-free-slides/receiptai.html
+
 สไลด์เสริม — วิธีสมัคร Oracle Cloud Free Tier ทีละขั้นจากหน้าจอจริง (8 ขั้นตอน ภาพทั้งหมดปิดข้อมูลส่วนตัวแล้ว): https://pbseiya.github.io/oracle-a1-always-free-slides/signup.html
 
 สไลด์เสริม — วิธีสร้าง VCN ด้วย VCN Wizard ทีละขั้นจากหน้าจอจริง (7 ขั้นตอน ภาพทั้งหมดปิดข้อมูลเฉพาะตัวแล้ว): https://pbseiya.github.io/oracle-a1-always-free-slides/vcn.html
