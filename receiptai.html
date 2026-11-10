@@ -189,7 +189,7 @@
 1. หน้าเว็บภาษาไทย โทนสีน้ำเงินเข้ม มี sidebar: อัปโหลดใบเสร็จ / ประวัติ / ตั้งค่า
 2. อัปโหลดรูปได้ทั้งลากวางและเลือกไฟล์ รองรับ JPG, PNG, PDF แสดงภาพตัวอย่างทันที
 3. ปุ่ม "อ่านด้วย Hermes AI" ส่งรูปผ่านฟังก์ชัน extract_receipt(image_bytes)
-   โดยอ่าน Token จาก environment variable HERMES_TOKEN เท่านั้น ห้าม hardcode
+   โดยอ่าน Token จาก environment variable LITELLM_ADMIN_KEY เท่านั้น ห้าม hardcode
 4. ผลลัพธ์เป็น JSON แสดงเป็น: การ์ดสรุป + ตารางสินค้า + ตรวจเลขคณิตเทียบยอดรวม
 5. มีปุ่มดาวน์โหลด JSON และ CSV และเก็บประวัติการอ่านใน session
 6. มีโหมดสำรอง MOCK_MODE ถ้าไม่มี Token ให้ใช้ข้อมูลตัวอย่างและขึ้นป้าย "โหมดสาธิต"
@@ -208,14 +208,14 @@
     <li><b>Token อยู่นอกโค้ด:</b> โค้ดแชร์ให้ใครก็ปลอดภัย Token ไม่หลุด</li>
     <li><b>มีโหมดสาธิตสำรอง:</b> ต่อ AI ไม่ได้ก็ยังเรียนต่อได้ หน้าเว็บไม่ตายกลางคลาส</li>
   </ul>
-  <div class="warn">⚠️ กฎเหล็กบนจอแชร์: <b>ห้ามโชว์ Token จริง</b> — ใช้ placeholder <b>&lt;HERMES_TOKEN&gt;</b> เสมอ</div>
+  <div class="warn">⚠️ กฎเหล็กบนจอแชร์: <b>ห้ามโชว์ Token จริง</b> — ใช้ placeholder <b>&lt;LITELLM_ADMIN_KEY&gt;</b> เสมอ</div>
 </section>
 
 <!-- 12 รันแอพ -->
 <section class="slide">
   <span class="phase">สร้างเว็บแอพ • ขั้น 2</span>
   <h2>สั่งรันแอพ แล้วเปิดเว็บ<span class="blue">ของตัวเอง</span></h2>
-  <pre><code><span class="cmd">export</span> HERMES_TOKEN=&lt;HERMES_TOKEN&gt;
+  <pre><code><span class="cmd">export</span> LITELLM_ADMIN_KEY=&lt;LITELLM_ADMIN_KEY&gt;
 <span class="cmd">streamlit run</span> app.py --server.port 8501 --server.address 0.0.0.0</code></pre>
   <ul style="margin-top:16px">
     <li>เปิดเว็บที่ <b>http://&lt;IP ของเครื่อง A1&gt;:8501</b></li>
