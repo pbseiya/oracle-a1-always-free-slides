@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReceiptAI ภาค 2 — AI คัดใบเสร็จ เคลม VAT ได้-ไม่ได้</title>
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family:"Segoe UI","Noto Sans Thai",Tahoma,sans-serif; }
+  body { background:#050b20; color:#e8eefc; }
+  .slide { display:none; min-height:100vh; padding:56px 7vw 110px; flex-direction:column; justify-content:center; max-width:1180px; margin:0 auto; }
+  .slide.active { display:flex; }
+  body.all .slide { display:flex; min-height:auto; border-bottom:2px solid #1c2c55; padding-top:44px; padding-bottom:60px; }
+  .kicker { color:#ff5d7e; font-weight:800; letter-spacing:.14em; font-size:14px; text-transform:uppercase; margin-bottom:14px; }
+  .phase { display:inline-block; background:#122a5e; border:1px solid #2b4a8f; color:#9fc0ff; padding:5px 14px; border-radius:999px; font-size:14px; font-weight:700; margin-bottom:18px; width:fit-content; }
+  h1 { font-size:52px; line-height:1.2; }
+  h1 .blue { color:#38b6ff; } h1 .pink { color:#ff5d7e; } h1 .yellow { color:#ffd21f; }
+  h2 { font-size:38px; line-height:1.3; margin-bottom:22px; }
+  h2 .blue { color:#38b6ff; } h2 .green { color:#41d98d; } h2 .yellow { color:#ffd21f; } h2 .pink { color:#ff5d7e; }
+  p, li { font-size:21px; line-height:1.65; color:#c9d7f8; }
+  ul { margin-left:26px; } li { margin-bottom:10px; }
+  li b, p b { color:#fff; }
+  .sub { font-size:22px; color:#9fc0ff; margin-top:16px; line-height:1.6; }
+  .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:16px; margin-top:10px; }
+  .card { background:#0b183a; border:1px solid #1c2c55; border-radius:14px; padding:20px; }
+  .card .ic { font-size:30px; margin-bottom:8px; }
+  .card h3 { font-size:20px; margin-bottom:8px; color:#fff; }
+  .card p { font-size:16.5px; }
+  .flow { display:flex; align-items:stretch; gap:10px; flex-wrap:wrap; margin-top:14px; }
+  .flow .box { flex:1; min-width:170px; background:#0b183a; border:2px solid #2b4a8f; border-radius:14px; padding:18px; text-align:center; }
+  .flow .box .ic { font-size:32px; } .flow .box h3 { color:#fff; font-size:19px; margin:6px 0; } .flow .box p { font-size:15px; }
+  .flow .arr { align-self:center; font-size:26px; color:#38b6ff; }
+  pre { background:#02060f; border:1px solid #24407c; border-radius:12px; padding:20px 22px; overflow-x:auto; margin-top:8px; }
+  pre code { font-family:Consolas,"Courier New",monospace; font-size:16.5px; line-height:1.55; color:#b9f6ca; white-space:pre-wrap; }
+  .cmd { color:#ffd21f; }
+  .imgrow { display:flex; gap:22px; flex-wrap:wrap; align-items:flex-start; margin-top:8px; }
+  .imgrow img { max-height:430px; border-radius:10px; box-shadow:0 10px 30px rgba(0,0,0,.55); background:#fff; }
+  .result { flex:1; min-width:280px; background:#0b183a; border:1px solid #1c2c55; border-radius:14px; padding:20px; }
+  .kv { display:flex; justify-content:space-between; padding:8px 2px; border-bottom:1px solid #16295a; font-size:18px; }
+  .kv b.total { color:#41d98d; font-size:22px; }
+  table { width:100%; border-collapse:collapse; margin-top:10px; font-size:16.5px; }
+  th { text-align:left; color:#8fa5d6; padding:6px; border-bottom:1px solid #24407c; }
+  td { padding:6px; border-bottom:1px solid #14254f; color:#dbe7ff; }
+  td.r, th.r { text-align:right; }
+  .warn { background:#3a2b06; border:1px solid #a97e12; color:#ffd968; padding:14px 18px; border-radius:12px; font-size:18.5px; margin-top:16px; line-height:1.55; }
+  .good { background:#07331c; border:1px solid #0aa84f; color:#7decae; padding:14px 18px; border-radius:12px; font-size:18.5px; margin-top:16px; line-height:1.55; }
+  .danger { background:#3d0a18; border:1px solid #c22c4a; color:#ff9db1; padding:14px 18px; border-radius:12px; font-size:18.5px; margin-top:16px; line-height:1.55; }
+  .big { font-size:27px; line-height:1.55; }
+  .check { font-size:22px; background:#122a5e; border:2px dashed #38b6ff; padding:16px 20px; border-radius:12px; margin-top:18px; color:#fff; }
+  .speaker { margin-top:26px; display:flex; gap:16px; align-items:center; }
+  .speaker .av { width:64px; height:64px; border-radius:50%; background:#1663ff; display:flex; align-items:center; justify-content:center; font-size:26px; font-weight:800; color:#fff; }
+  .speaker p { font-size:18px; }
+  .tag { display:inline-block; background:#3d0a18; border:1px solid #7c2440; color:#ff8fab; font-weight:800; padding:6px 14px; border-radius:999px; font-size:15px; }
+  nav.bar { position:fixed; bottom:0; left:0; right:0; background:rgba(6,13,36,.94); border-top:1px solid #1c2c55; display:flex; align-items:center; gap:12px; padding:10px 18px; z-index:10; }
+  nav.bar button { background:#122a5e; color:#dbe7ff; border:1px solid #2b4a8f; padding:9px 18px; border-radius:9px; cursor:pointer; font-size:15px; }
+  nav.bar button:hover { background:#1a3a7d; }
+  #counter { font-size:15px; color:#9fc0ff; min-width:64px; text-align:center; }
+  #progress { position:fixed; top:0; left:0; height:4px; background:linear-gradient(90deg,#1663ff,#38b6ff); z-index:11; transition:width .25s; }
+  @media (max-width:700px){ h1{font-size:36px} h2{font-size:28px} p,li{font-size:18px} .slide{padding:36px 5vw 110px} }
+  .st { display:inline-block; padding:3px 14px; border-radius:999px; font-weight:800; font-size:17px; }
+  .st-c { background:#07331c; color:#41d98d; border:1px solid #0aa84f; }
+  .st-n { background:#3d0a18; color:#ff9db1; border:1px solid #c22c4a; }
+  .st-r { background:#3a2b06; color:#ffd968; border:1px solid #a97e12; }
+  td .st { font-size:14.5px; padding:2px 10px; }
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<!-- 01 ปก -->
+<section class="slide active">
+  <div class="kicker">ReceiptAI ภาค 2 • คลาสออนไลน์ฟรี</div>
+  <h1>AI คัดใบเสร็จ<br><span class="blue">เคลม VAT</span> <span class="green">ได้</span>-<span class="pink">ไม่ได้</span></h1>
+  <p class="sub">จากกองเอกสารซื้อทั้งเดือน → ตารางบัญชีพร้อมส่งสำนักงานบัญชี ในไฟล์ Excel ไฟล์เดียว<br>ด้วยเว็บแอพ <b style="color:#fff">VATSort</b> ที่เราจะสร้างกันคืนนี้ บนเครื่อง A1 + Hermes ของคุณเอง</p>
+  <p class="sub">พุธ 18 พฤศจิกายน 2569 • 20:00–21:00 น. • ออนไลน์<br>วิทยากร: Pongsak Boonpalit • เพจ AI Agents for Manufacturing &amp; Industry Thailand</p>
+  <div class="speaker"><div class="av">PB</div><p><b style="color:#fff">Pongsak Boonpalit</b> — AI Specialist<br>ผู้เชี่ยวชาญด้าน AI, Automation และ Digital Transformation</p></div>
+</section>
+
+<!-- 02 ปัญหาสิ้นเดือน -->
+<section class="slide">
+  <span class="phase">เกริ่นนำ • ปัญหาที่ทุกคนเจอ</span>
+  <h2>สิ้นเดือนทีไร <span class="pink">กองเอกสาร</span>ก็มาอีกแล้ว</h2>
+  <ul>
+    <li>ใบเสร็จ ใบกำกับภาษี ใบรับเงิน ปนกันทั้งเดือน — บางใบ<b>เคลม VAT ได้</b> บางใบ<b>ไม่ได้</b> บางใบ<b>ไม่แน่ใจ</b></li>
+    <li>คัดผิด = เคลมภาษีซื้อเกินจริง เสี่ยงโดนเรียกคืน + เบี้ยปรับ หรือทิ้งสิทธิ์ที่ควรได้ไปฟรี ๆ</li>
+    <li>งานนี้ต้องจบก่อน<b>ยื่น ภ.พ.30</b> ทุกเดือน — เป็นงานซ้ำ ๆ ที่กินเวลาคนบัญชีที่สุดงานหนึ่ง</li>
+  </ul>
+  <div class="warn">คืนนี้เราจะให้ <b>AI ช่วยคัดเบื้องต้น</b> ให้ทั้งกองภายในไม่กี่นาที แล้วคนตรวจเฉพาะใบที่ AI ไม่แน่ใจ — ไม่ใช่ให้ AI ตัดสินแทนบัญชี</div>
+</section>
+
+<!-- 03 วันนี้ได้อะไร -->
+<section class="slide">
+  <span class="phase">เกริ่นนำ • เป้าหมายคืนนี้</span>
+  <h2>จบคลาสนี้ คุณจะได้ <span class="blue">3 อย่าง</span></h2>
+  <div class="cards">
+    <div class="card"><div class="ic">🗂️</div><h3>แอพ VATSort</h3><p>เว็บแอพของคุณเอง อัปโหลดเอกสารทั้งโฟลเดอร์ แล้วคัดแยกสถานะเคลม VAT ให้ทีละใบ พร้อมเหตุผลทุกใบ</p></div>
+    <div class="card"><div class="ic">📊</div><h3>ไฟล์ Excel ส่งบัญชี</h3><p>ตารางรายการทั้งหมด + สรุปยอด VAT เคลมได้รายเดือน ในไฟล์เดียว เปิด ค้นหา กรองเดือนได้เลย</p></div>
+    <div class="card"><div class="ic">🧠</div><h3>วิธีคิด 3 สถานะ</h3><p>กรอบคิดคัดเอกสารที่ใช้ได้ตลอด ไม่ว่าเครื่องมือจะเปลี่ยนไปแค่ไหน</p></div>
+  </div>
+  <p class="sub">ใช้เครื่อง A1 + Hermes ชุดเดียวกับภาคแรก ไม่ต้องติดตั้งอะไรเพิ่มนอกจากแพ็กเกจ Excel ตัวเดียว (ในการบ้านก่อนคลาส)</p>
+</section>
+
+<!-- 04 ทบทวนภาคแรก -->
+<section class="slide">
+  <span class="phase">เกริ่นนำ • ทบทวน 1 นาที</span>
+  <h2>ภาคแรก: อ่าน <span class="blue">ทีละใบ</span> → ภาคนี้: จัดการ <span class="yellow">ทั้งเดือน</span></h2>
+  <div class="flow">
+    <div class="box"><div class="ic">📸</div><h3>ภาคแรก (11 พ.ย.)</h3><p>ถ่ายรูปใบเสร็จ → AI อ่านเป็นข้อมูล JSON → แสดงผลบนเว็บแอพ ReceiptAI</p></div>
+    <div class="arr">➜</div>
+    <div class="box"><div class="ic">🗂️</div><h3>ภาคนี้ (18 พ.ย.)</h3><p>เอกสารทั้งโฟลเดอร์ → AI อ่าน + <b>คัดสถานะเคลม VAT</b> → ตารางสะสม + สรุปรายเดือน → ส่งออก Excel</p></div>
+  </div>
+  <p class="sub">ใครไม่ได้เข้าภาคแรก: ไม่เป็นไรครับ คืนนี้เริ่มจากเดโมผลลัพธ์ก่อน เห็นภาพรวมแล้วค่อยลงมือสร้างตาม</p>
+</section>
+
+<!-- 05 วงจรงานจริง -->
+<section class="slide">
+  <span class="phase">ภาพรวม • งานบัญชีรายเดือนของ SME</span>
+  <h2>งานจริงมี <span class="blue">5 ขั้น</span> — AI ช่วยตรงกลาง</h2>
+  <div class="flow">
+    <div class="box"><div class="ic">🧾</div><h3>1 เก็บเอกสาร</h3><p>เอกสารซื้อทั้งเดือน เก็บเป็นไฟล์รูปในโฟลเดอร์เดียว</p></div>
+    <div class="arr">➜</div>
+    <div class="box"><div class="ic">🤖</div><h3>2 AI อ่าน + คัด</h3><p>อ่านทุกใบ ตัดสินสถานะเบื้องต้น พร้อมเหตุผล</p></div>
+    <div class="arr">➜</div>
+    <div class="box"><div class="ic">👀</div><h3>3 คนตรวจทาน</h3><p>ตรวจเฉพาะใบที่ AI ไม่แน่ใจ + สุ่มเช็กยอดรวม</p></div>
+    <div class="arr">➜</div>
+    <div class="box"><div class="ic">📗</div><h3>4 รายงานภาษีซื้อ</h3><p>รวมเฉพาะใบเคลมได้ เป็นรายงานประจำเดือน</p></div>
+    <div class="arr">➜</div>
+    <div class="box"><div class="ic">🏛️</div><h3>5 ยื่น ภ.พ.30</h3><p>ภายในวันที่ 15 ของเดือนถัดไป (ยื่นออนไลน์ได้ถึงวันที่ 23)</p></div>
+  </div>
+  <div class="warn">⏰ กฎที่ต้องรู้: <b>เครดิตภาษีซื้อใช้ได้ภายใน 6 เดือน</b> นับจากเดือนถัดจากเดือนที่ออกใบกำกับภาษี — เก็บไว้นานกว่านั้นคือหมดสิทธิ์ แอพของเราจะช่วยเตือนใบใกล้หมดสิทธิให้ด้วย</div>
+</section>
+
+<!-- 06 กฎ 3 สถานะ -->
+<section class="slide">
+  <span class="phase">หัวใจของคลาส • กฎการคัดแยก</span>
+  <h2>เอกสารทุกใบ จบที่ <span class="yellow">1 ใน 3 สถานะ</span></h2>
+  <div class="cards">
+    <div class="card"><h3><span class="st st-c">เคลมได้</span></h3><p>ใบกำกับภาษี<b>เต็มรูป</b> ออกในนามบริษัท ข้อมูลผู้ซื้อครบ (ชื่อ + เลขผู้เสียภาษี 13 หลัก) ผู้ขายจด VAT และเป็นค่าใช้จ่ายเกี่ยวกับกิจการ</p></div>
+    <div class="card"><h3><span class="st st-n">เคลมไม่ได้</span></h3><p>ใบกำกับภาษี<b>อย่างย่อ</b> • เอกสารที่ไม่มีใบกำกับภาษี • <b>ภาษีซื้อต้องห้าม</b> เช่น ค่ารับรอง — ต่อให้ใบเต็มรูปก็เคลมไม่ได้</p></div>
+    <div class="card"><h3><span class="st st-r">ให้บัญชีตรวจ</span></h3><p>ข้อมูลผู้ซื้อขาด/พิมพ์ผิด • อ่านเอกสารไม่ชัด • รายการอาจไม่เกี่ยวกับกิจการ • เอกสารซ้ำ — กลุ่มนี้ <b>AI ไม่ตัดสินแทนคน</b></p></div>
+  </div>
+  <div class="good">หลักการสำคัญ: ทุกใบต้องมี <b>"เหตุผล" กำกับเสมอ</b> — คนตรวจต่อได้ทันที ไม่ต้องเดาว่า AI คิดอะไร</div>
+</section>
+
+<!-- 07 ชุดฝึก -->
+<section class="slide">
+  <span class="phase">เตรียมลงมือ • เอกสารฝึกของคืนนี้</span>
+  <h2>ชุดฝึก: เอกสาร <span class="blue">24 ใบ</span> จาก 3 เดือน</h2>
+  <ul>
+    <li>บริษัทสมมติ <b>บริษัท เอสเอ็มอี ตัวอย่าง จำกัด</b> — ส.ค. 8 ใบ • ก.ย. 8 ใบ • ต.ค. 8 ใบ (เอกสารตัวอย่างทุกใบ ใช้เรียนเท่านั้น)</li>
+    <li>ปนกันครบทุกแบบ: เต็มรูป / อย่างย่อ / ใบเสร็จธรรมดา / ค่ารับรอง / ใบซ้ำ / ตัวเลขพิมพ์ตก / ภาพจางอ่านไม่ออก</li>
+    <li>เฉลยทั้งชุด: <span class="st st-c">เคลมได้ 11</span> <span class="st st-n">เคลมไม่ได้ 9</span> <span class="st st-r">ให้บัญชีตรวจ 4</span></li>
+  </ul>
+  <table>
+    <tr><th>เดือน</th><th class="r">VAT เคลมได้ตามเฉลย (บาท)</th></tr>
+    <tr><td>สิงหาคม 2569</td><td class="r">3,108.00</td></tr>
+    <tr><td>กันยายน 2569</td><td class="r">1,602.93</td></tr>
+    <tr><td>ตุลาคม 2569</td><td class="r">1,344.00</td></tr>
+  </table>
+  <p class="sub">จำยอด 3 เดือนนี้ไว้ — เดี๋ยวเราจะเทียบกับที่ AI คัดได้จริงในเดโม</p>
+</section>
+
+<!-- 08 เดโม -->
+<section class="slide">
+  <span class="phase">เดโม • เห็นปลายทางก่อน</span>
+  <h2>เดโม: รันเอกสารทั้งโฟลเดอร์ <span class="blue">24 ใบรวดเดียว</span></h2>
+  <ul>
+    <li>เปิดแอพสำเร็จรูป → อัปโหลดทั้ง 24 ใบ → กดปุ่มเดียว <b>"อ่านและคัดแยกเอกสาร"</b></li>
+    <li>ดูตารางที่ได้: สถานะสีแยกชัด ใบที่ต้องให้บัญชีตรวจเป็น<b>แถบเหลือง</b> พร้อมเหตุผลกำกับทุกใบ</li>
+    <li>กดดู<b>สรุปรายเดือน ต.ค.</b>: จำนวนใบแยกตามสถานะ + ยอด VAT เคลมได้รวม พร้อมส่งออก Excel</li>
+  </ul>
+  <div class="warn">⏱️ เวลาจริงจากการซ้อมรัน: ทั้งชุดใช้เวลาราว <b>5 นาที</b> (ประมาณ 12 วินาทีต่อใบ) — ระหว่างรอผล เราจะคุยเรื่องกฎการคัดแยกกันพอดี</div>
+</section>
+
+<!-- 09 ผลเดโม -->
+<section class="slide">
+  <span class="phase">เดโม • ผลซ้อมรันจริงก่อนคลาส</span>
+  <h2>AI คัดถูก <span class="green">23 จาก 24 ใบ</span> — ยอดรวมตรงเป๊ะทุกใบ</h2>
+  <table>
+    <tr><th>เดือน</th><th class="r">AI คัดได้ (บาท)</th><th class="r">เฉลย (บาท)</th><th>ผล</th></tr>
+    <tr><td>กันยายน 2569</td><td class="r">1,602.93</td><td class="r">1,602.93</td><td>✔ ตรง</td></tr>
+    <tr><td>ตุลาคม 2569</td><td class="r">1,344.00</td><td class="r">1,344.00</td><td>✔ ตรง</td></tr>
+    <tr><td>สิงหาคม 2569</td><td class="r">3,248.00</td><td class="r">3,108.00</td><td>✘ ต่าง 140.00</td></tr>
+  </table>
+  <ul>
+    <li>ยอดเงินรวมของเอกสาร <b>24/24 ใบอ่านถูกต้องทุกใบ</b> และจับเอกสารซ้ำ (ใบที่สแกนซ้ำ) ได้เอง</li>
+    <li>ส่วนต่าง 140 บาทของเดือน ส.ค. มาจากใบเดียว — คือเคสสอนของสไลด์ถัดไป</li>
+  </ul>
+</section>
+
+<!-- 10 เคส A6 -->
+<section class="slide">
+  <span class="phase">เคสสอน • ทำไมต้องมีสถานะที่ 3</span>
+  <h2>เคส A6: ใบที่ AI <span class="yellow">"ใจดีเกินไป"</span></h2>
+  <div class="result" style="max-width:760px">
+    <div class="kv"><span>ผู้ขาย</span><b>บจก.บิวตี้ช็อป</b></div>
+    <div class="kv"><span>รายการ</span><b>ชุดเครื่องสำอาง / ของใช้ส่วนตัว</b></div>
+    <div class="kv"><span>ประเภท</span><b>ใบกำกับภาษีเต็มรูป ข้อมูลครบ</b></div>
+    <div class="kv"><span>ยอดรวม / VAT</span><b>2,140.00 / 140.00 บาท</b></div>
+    <div class="kv"><span>เฉลย</span><b><span class="st st-r">ให้บัญชีตรวจ</span> อาจไม่เกี่ยวกับกิจการ</b></div>
+    <div class="kv"><span>AI ตอบ</span><b><span class="st st-c">เคลมได้</span> ให้เหตุผลว่าเป็นสวัสดิการพนักงาน</b></div>
+  </div>
+  <div class="warn">บทเรียน: ใบที่ "เอกสารครบ แต่ไม่แน่ใจว่าเกี่ยวกับกิจการไหม" คือเส้นแบ่งที่ต้องใช้<b>วิจารณญาณของคน</b> — นี่คือเหตุผลที่เราออกแบบให้มีสถานะ "ให้บัญชีตรวจ" แทนที่จะให้ AI ฟันธงทุกใบ</div>
+</section>
+
+<!-- 11 คู่เทียบน้ำมัน -->
+<section class="slide">
+  <span class="phase">เคสสอน • คู่เทียบสำคัญ</span>
+  <h2>น้ำมันเหมือนกัน <span class="pink">ผลต่างกัน</span> เพราะประเภทใบ</h2>
+  <div class="cards">
+    <div class="card"><h3>ใบ S6 — ปั๊ม ปตท. 1,500 บาท</h3><p>น้ำมันรถส่งของเหมือนกัน แต่เป็นใบกำกับภาษี<b>อย่างย่อ</b></p><p><span class="st st-n">เคลมไม่ได้</span> กฎหมายไม่ให้ใช้ใบอย่างย่อเคลมภาษีซื้อ</p></div>
+    <div class="card"><h3>ใบ O3 — ปั๊มน้ำมันสุขใจ 3,210 บาท</h3><p>น้ำมันรถส่งของเหมือนกัน แต่เป็นใบกำกับภาษี<b>เต็มรูป</b> ในนามบริษัท</p><p><span class="st st-c">เคลมได้</span> VAT 210.00 บาท</p></div>
+  </div>
+  <div class="good">ทริกใช้จริง: เติมน้ำมันรถบริษัททุกครั้ง <b>ขอใบกำกับภาษีเต็มรูป</b> (แจ้งเลขผู้เสียภาษีของบริษัทที่ปั๊ม) — แค่เปลี่ยนนิสัยนี้ก็ไม่ทิ้งเงิน VAT ฟรี ๆ อีก</div>
+</section>
+
+<!-- 12 ตรวจ 4 ใบ -->
+<section class="slide">
+  <span class="phase">เคสสอน • กลุ่มให้บัญชีตรวจ</span>
+  <h2>4 ใบที่ AI <span class="yellow">ไม่ฟันธง</span> — และควรเป็นแบบนั้น</h2>
+  <table>
+    <tr><th>ใบ</th><th>เอกสาร</th><th>เหตุผลที่ต้องให้คนตรวจ</th></tr>
+    <tr><td>A6</td><td>ชุดเครื่องสำอาง (บิวตี้ช็อป)</td><td>รายการอาจไม่เกี่ยวกับกิจการ</td></tr>
+    <tr><td>S7</td><td>กล่องบรรจุภัณฑ์</td><td>เลขผู้เสียภาษีของผู้ซื้อพิมพ์ตกไป 1 หลัก — ต้องขอผู้ขายแก้ไข</td></tr>
+    <tr><td>S8</td><td>อะไหล่เครื่องจักร</td><td>เอกสารซ้ำกับใบ S1 ทุกตัวอักษร — นับยอดได้ครั้งเดียว</td></tr>
+    <tr><td>O7</td><td>สารเคมี (เคมีภัณฑ์ไทย)</td><td>ภาพจาง เลขที่ใบกำกับอ่านไม่ออก</td></tr>
+  </table>
+  <p class="sub">งานของคนบัญชีจึงเหลือแค่ 4 ใบจาก 24 ใบ — จากงานคัดทั้งกอง เหลือแค่งานตรวจเฉพาะจุด</p>
+</section>
+
+<!-- 13 ลงมือสร้าง + แตก P1 -->
+<section class="slide">
+  <span class="phase">ลงมือทำ • สร้างแอพของตัวเอง (20:15–20:35)</span>
+  <h2>สร้างแอพด้วย <span class="blue">พร้อมพ์ก้อนเดียว</span> — แต่เข้าใจไส้ในก่อน</h2>
+  <ul>
+    <li>จังหวะของเรา: <b>ผมอธิบายทีละส่วนก่อน</b> → พอเข้าใจแล้วค่อยวางพร้อมพ์ P1 ทั้งก้อนลง Hermes → ใครเสร็จก่อน ลองรันต่อได้เลย ไม่ต้องรอเพื่อน</li>
+    <li>พร้อมพ์ P1 มี 4 ส่วน: <b>การเชื่อม AI • ขั้นอ่านและคัดแยก • ตาราง Excel • หน้าจอใช้งาน</b> (สไลด์ถัดไป)</li>
+    <li>ตามไม่ทันไม่ต้องตกใจ: มี<b>ไฟล์แอพสำเร็จรูป</b>แจกสำรอง เปิดใช้ต่อได้ทันที แล้วค่อยกลับไปสร้างเองทีหลัง</li>
+  </ul>
+  <div class="check">📄 พร้อมพ์ P1 ฉบับเต็มอยู่ในไฟล์แจก <b>"02-ชุดพร้อมพ์"</b> ในโฟลเดอร์ผู้เรียน — เปิดรอไว้เลยครับ</div>
+</section>
+
+<!-- 14 ไส้ใน P1 -->
+<section class="slide">
+  <span class="phase">ลงมือทำ • ไส้ในพร้อมพ์ P1</span>
+  <h2>P1 แตกเป็น <span class="blue">4 ส่วน</span> — หัวใจอยู่ส่วนที่ 2</h2>
+  <div class="cards">
+    <div class="card"><div class="ic">🔌</div><h3>1 การเชื่อม AI</h3><p>เรียกโมเดลเดิมจากภาคแรกผ่าน LiteLLM (qwen3.7-plus) ด้วยคีย์จาก environment — ไม่มีคีย์ก็ยังเปิดแอพทดลองได้ในโหมดทดสอบ</p></div>
+    <div class="card"><div class="ic">🧾</div><h3>2 อ่าน + คัดแยก ⭐</h3><p>ส่งรูปทีละใบ สั่งให้ตอบเป็น JSON โครงสร้างตายตัว แล้วตัดสินสถานะด้วยกฎ 3 สถานะจากสไลด์ที่ 6 พร้อมเหตุผลภาษาไทย 1 ประโยค</p></div>
+    <div class="card"><div class="ic">📗</div><h3>3 ตาราง Excel</h3><p>เก็บสะสมในไฟล์ vat-ledger.xlsx ไฟล์เดียว • กันเอกสารซ้ำด้วยเลขที่เอกสาร + ผู้ขาย • ใบเคลมไม่ได้ให้นับ VAT เป็น 0</p></div>
+    <div class="card"><div class="ic">🖥️</div><h3>4 หน้าจอใช้งาน</h3><p>อัปโหลดหลายรูป + แถบความคืบหน้า • ค้นหา/กรองเดือนได้ • สรุปรายเดือน • ปุ่มดาวน์โหลด Excel 2 แผ่น (รายการทั้งหมด + สรุปรายเดือน)</p></div>
+  </div>
+  <div class="warn">กฎเหล็กในพร้อมพ์: ถ้าใบไหนอ่านไม่สำเร็จ ให้ใบนั้นเป็น "ให้บัญชีตรวจ" แล้วไปใบต่อไป — <b>ห้ามแอพพังทั้งชุดเพราะใบเดียว</b></div>
+</section>
+
+<!-- 15 รันชุดของตัวเอง -->
+<section class="slide">
+  <span class="phase">ลงมือทำ • ทดสอบแอพของตัวเอง (20:35–20:52)</span>
+  <h2>รันชุดฝึก 24 ใบ <span class="blue">กับแอพของคุณเอง</span></h2>
+  <ul>
+    <li>อัปโหลดเอกสารตัวอย่างทั้งโฟลเดอร์ → กดอ่านและคัดแยก → รอผลราว 5 นาที ระหว่างรอ ไล่ดูใบที่เพื่อนข้าง ๆ ได้ผลต่างออกไป</li>
+    <li>เทียบผลกับ<b>เฉลยสไลด์ที่ 7</b>: สถานะถูกกี่ใบ ยอด VAT แต่ละเดือนตรงไหม</li>
+    <li>เปิดดูกลุ่ม <span class="st st-r">ให้บัญชีตรวจ</span> ของตัวเอง — ครบ 4 ใบตามสไลด์ที่ 12 ไหม เหตุผลที่ AI เขียนไว้สมเหตุสมผลหรือเปล่า</li>
+  </ul>
+  <div class="check">✅ เช็กพอยต์: ตารางมีครบ 24 แถว • โหลดไฟล์ Excel ได้ • ยอด VAT เดือน ก.ย. = 1,602.93 และ ต.ค. = 1,344.00</div>
+</section>
+
+<!-- 16 P2 รายงานภาษีซื้อ -->
+<section class="slide">
+  <span class="phase">ต่อยอด • พร้อมพ์เสริม P2</span>
+  <h2>เพิ่มปุ่ม <span class="blue">"รายงานภาษีซื้อ"</span> แบบฟอร์มสรรพากร</h2>
+  <ul>
+    <li>วางพร้อมพ์ <b>P2</b> ต่อใน Hermes เดิม — เพิ่มปุ่มเดียว ไม่ต้องสร้างแอพใหม่</li>
+    <li>ได้ไฟล์ Excel แผ่นเดียว เรียงตามวันที่ เฉพาะใบสถานะ <span class="st st-c">เคลมได้</span> ของเดือนที่เลือก</li>
+    <li>คอลัมน์ตามแบบรายงานภาษีซื้อ: ลำดับที่ • วันเดือนปี • เลขที่ใบกำกับภาษี • ชื่อผู้ขาย • เลขผู้เสียภาษีผู้ขาย • สถานประกอบการ • มูลค่า • จำนวน VAT • แถวรวมท้ายตาราง</li>
+  </ul>
+  <div class="good">ไฟล์นี้คือชิ้นที่ส่งให้สำนักงานบัญชีต่อได้ทันที — จากกองรูปเอกสาร สู่รายงานพร้อมยื่นในไฟล์เดียว</div>
+</section>
+
+<!-- 17 ใช้จริง + P3 -->
+<section class="slide">
+  <span class="phase">ใช้จริงที่ออฟฟิศ • และเมื่อแอพมีปัญหา</span>
+  <h2>เอาไปใช้จริง + <span class="yellow">พร้อมพ์แก้ปัญหา P3</span></h2>
+  <ul>
+    <li><b>รอบงานรายเดือน:</b> ตั้งโฟลเดอร์เอกสารซื้อแยกตามเดือน → สิ้นเดือนรันทั้งโฟลเดอร์ → คนตรวจเฉพาะแถบเหลือง → ส่งออกรายงานให้บัญชี</li>
+    <li><b>เตือน 6 เดือน:</b> หน้าสรุปจะเตือนใบที่ใกล้หมดสิทธิใช้เครดิต (เดือนสุดท้ายภายใน 2 เดือน) — อย่าปล่อยใบเก่าค้างจนหมดสิทธิ์</li>
+    <li><b>ความปลอดภัย:</b> คีย์อยู่ใน environment เท่านั้น ห้ามพิมพ์ลงโค้ด ห้ามส่งให้ใคร • เอกสารลูกค้ามีข้อมูลส่วนบุคคล ระวังการเก็บและแชร์ต่อ</li>
+    <li><b>แอพพังหรือผลเพี้ยน:</b> ใช้พร้อมพ์ <b>P3</b> — วางอาการ/error ให้ Hermes อ่านไฟล์เดิมแล้วแก้เฉพาะจุด ห้ามเขียนใหม่ทั้งไฟล์</li>
+  </ul>
+</section>
+
+<!-- 18 ข้อจำกัด + สรุป -->
+<section class="slide">
+  <span class="phase">สรุป • ข้อจำกัด • การบ้าน • Q&amp;A</span>
+  <h2>จำ <span class="yellow">3 บรรทัด</span>นี้กลับบ้าน</h2>
+  <ul>
+    <li><b>AI คัดแยกเบื้องต้นเท่านั้น ไม่ใช่คำวินิจฉัยภาษี</b> — ใบกลุ่ม "ให้บัญชีตรวจ" และยอดสรุป ต้องผ่านตาคนบัญชีก่อนยื่นทุกครั้ง</li>
+    <li>หัวใจของระบบไม่ใช่โมเดล แต่คือ <b>กฎ 3 สถานะ + เหตุผลทุกใบ + คนตรวจจุดเสี่ยง</b></li>
+    <li>ไฟล์ที่ต้องเก็บ: พร้อมพ์ <b>P1/P2/P3</b> (ไฟล์แจก 02) และไฟล์ Excel ของแต่ละเดือน</li>
+  </ul>
+  <div class="warn">🏠 การบ้าน: เอาเอกสารซื้อ<b>จริงของตัวเอง 1 เดือน</b>มาลองรัน แล้วจดว่าใบไหน AI คัดต่างจากที่เราคิด — เอาเคสมาแชร์ในกลุ่มได้เลย<br>📄 ไฟล์แจกทั้งหมดอยู่ในโฟลเดอร์ผู้เรียนของคอร์สนี้ (พร้อมพ์ + เอกสารตัวอย่าง 24 ใบ + แอพสำเร็จรูป)</div>
+  <p class="big" style="margin-top:20px">ขอบคุณทุกท่านครับ 🙏 คำถามเชิญได้เลย</p>
+</section>
+
+<script>
+const slides = [...document.querySelectorAll(".slide")];
+let cur = 0;
+function show(i){
+  cur = Math.max(0, Math.min(i, slides.length - 1));
+  slides.forEach((s, j) => s.classList.toggle("active", j === cur));
+  document.getElementById("counter").textContent = (cur + 1) + " / " + slides.length;
+  document.getElementById("progress").style.width = ((cur + 1) / slides.length * 100) + "%";
+  window.scrollTo(0, 0);
+}
+const bar = document.createElement("nav"); bar.className = "bar";
+bar.innerHTML = '<button id="prev">← ก่อนหน้า</button><span id="counter"></span><button id="next">ถัดไป →</button><button id="all">แสดงทั้งหมด</button><span style="color:#5f76ad;font-size:13px">ใช้ปุ่มลูกศร ← → ได้ • ReceiptAI ภาค 2 • 18 พ.ย. 2569</span>';
+document.body.appendChild(bar);
+document.getElementById("prev").onclick = () => show(cur - 1);
+document.getElementById("next").onclick = () => show(cur + 1);
+document.getElementById("all").onclick = e => {
+  const on = document.body.classList.toggle("all");
+  slides.forEach(s => s.classList.toggle("active", on || s === slides[cur]));
+  e.target.textContent = on ? "โหมดนำเสนอ" : "แสดงทั้งหมด";
+};
+document.addEventListener("keydown", e => {
+  if (document.body.classList.contains("all")) return;
+  if (e.key === "ArrowRight" || e.key === " ") show(cur + 1);
+  if (e.key === "ArrowLeft") show(cur - 1);
+});
+show(0);
+</script>
+</body>
+</html>
